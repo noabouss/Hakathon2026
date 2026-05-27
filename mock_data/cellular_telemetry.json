@@ -1,0 +1,82 @@
+[
+    {
+        "occupant_id": "OCC-R-101-A",
+        "device_type": "smartphone",
+        "pedometer_5min_pre_event": {
+            "steps": 92,
+            "state": "Running"
+        },
+        "last_known_signal_dbm": -72,
+        "timestamp": "2026-05-27T15:59:55Z"
+    },
+    {
+        "occupant_id": "OCC-R-102-A",
+        "device_type": "smartphone",
+        "pedometer_5min_pre_event": {
+            "steps": 2,
+            "state": "Resting"
+        },
+        "last_known_signal_dbm": -88,
+        "timestamp": "2026-05-27T15:59:55Z"
+    },
+    {
+        "occupant_id": "OCC-R-201-A",
+        "device_type": "smartphone",
+        "pedometer_5min_pre_event": {
+            "steps": 45,
+            "state": "Walking"
+        },
+        "last_known_signal_dbm": -88,
+        "timestamp": "2026-05-27T15:59:55Z"
+    },
+    {
+        "occupant_id": "OCC-R-202-A",
+        "device_type": "smartphone",
+        "pedometer_5min_pre_event": {
+            "steps": 0,
+            "state": "Resting"
+        },
+        "last_known_signal_dbm": -88,
+        "timestamp": "2026-05-27T15:59:55Z"
+    },
+    {
+        "occupant_id": "OCC-R-301-A",
+        "device_type": "smartphone",
+        "pedometer_5min_pre_event": {
+            "steps": 0,
+            "state": "Resting"
+        },
+        "last_known_signal_dbm": -88,
+        "timestamp": "2026-05-27T15:59:55Z"
+    },
+    {
+        "occupant_id": "OCC-R-302-A",
+        "device_type": "smartphone",
+        "pedometer_5min_pre_event": {
+            "steps": 110,
+            "state": "Running"
+        },
+        "last_known_signal_dbm": -72,
+        "timestamp": "2026-05-27T15:59:55Z"
+    },
+    {
+        "occupant_id": "OCC-R-401-A",
+        "device_type": "smartphone",
+        "pedometer_5min_pre_event": {
+            "steps": 14,
+            "state": "Walking"
+        },
+        "last_known_signal_dbm": -88,
+        "timestamp": "2026-05-27T15:59:55Z"
+    },
+    {
+        "occupant_id": "OCC-R-402-A",
+        "device_type": "smartphone",
+        "pedometer_5min_pre_event": {
+            "steps": 5,
+            "state": "Resting"
+        },
+        "last_known_signal_dbm": -88,
+        "timestamp": "2026-05-27T15:59:55Z"
+    }
+]

@@ -1,0 +1,38 @@
+[
+    {
+        "router_id": "WIFI-AP-FL1",
+        "coverage_zone": "Floor 1",
+        "status_post_event": "Online",
+        "connected_occupants_pre_event": [
+            "OCC-R-101-A",
+            "OCC-R-102-A"
+        ]
+    },
+    {
+        "router_id": "WIFI-AP-FL2",
+        "coverage_zone": "Floor 2",
+        "status_post_event": "Online",
+        "connected_occupants_pre_event": [
+            "OCC-R-201-A",
+            "OCC-R-202-A"
+        ]
+    },
+    {
+        "router_id": "WIFI-AP-FL3",
+        "coverage_zone": "Floor 3",
+        "status_post_event": "Offline",
+        "connected_occupants_pre_event": [
+            "OCC-R-301-A",
+            "OCC-R-302-A"
+        ]
+    },
+    {
+        "router_id": "WIFI-AP-FL4",
+        "coverage_zone": "Floor 4",
+        "status_post_event": "Offline",
+        "connected_occupants_pre_event": [
+            "OCC-R-401-A",
+            "OCC-R-402-A"
+        ]
+    }
+]

@@ -1,0 +1,130 @@
+[
+    {
+        "meter_id": "METER-R-101",
+        "room_id": "R-101",
+        "history_last_2h_kwh": [
+            0.53,
+            1.02,
+            0.51,
+            0.48,
+            0.62,
+            1.06,
+            0.68,
+            0.34
+        ],
+        "transmitted_last_gasp": false,
+        "last_gasp_timestamp": null
+    },
+    {
+        "meter_id": "METER-R-102",
+        "room_id": "R-102",
+        "history_last_2h_kwh": [
+            0.7,
+            0.7,
+            0.25,
+            0.62,
+            0.62,
+            0.7,
+            0.98,
+            0.54
+        ],
+        "transmitted_last_gasp": false,
+        "last_gasp_timestamp": null
+    },
+    {
+        "meter_id": "METER-R-201",
+        "room_id": "R-201",
+        "history_last_2h_kwh": [
+            0.58,
+            0.17,
+            0.64,
+            0.33,
+            1.12,
+            0.13,
+            0.76,
+            0.63
+        ],
+        "transmitted_last_gasp": false,
+        "last_gasp_timestamp": null
+    },
+    {
+        "meter_id": "METER-R-202",
+        "room_id": "R-202",
+        "history_last_2h_kwh": [
+            0.77,
+            0.85,
+            0.65,
+            0.78,
+            0.12,
+            0.85,
+            0.77,
+            0.21
+        ],
+        "transmitted_last_gasp": false,
+        "last_gasp_timestamp": null
+    },
+    {
+        "meter_id": "METER-R-301",
+        "room_id": "R-301",
+        "history_last_2h_kwh": [
+            0.92,
+            1.1,
+            1.01,
+            1.13,
+            1.11,
+            0.45,
+            0.16,
+            0.27
+        ],
+        "transmitted_last_gasp": true,
+        "last_gasp_timestamp": "2026-05-27T16:00:00Z"
+    },
+    {
+        "meter_id": "METER-R-302",
+        "room_id": "R-302",
+        "history_last_2h_kwh": [
+            0.7,
+            0.48,
+            0.51,
+            0.33,
+            0.93,
+            1.19,
+            0.97,
+            0.1
+        ],
+        "transmitted_last_gasp": true,
+        "last_gasp_timestamp": "2026-05-27T16:00:00Z"
+    },
+    {
+        "meter_id": "METER-R-401",
+        "room_id": "R-401",
+        "history_last_2h_kwh": [
+            0.54,
+            0.34,
+            0.58,
+            0.65,
+            0.77,
+            0.81,
+            0.84,
+            0.24
+        ],
+        "transmitted_last_gasp": true,
+        "last_gasp_timestamp": "2026-05-27T16:00:00Z"
+    },
+    {
+        "meter_id": "METER-R-402",
+        "room_id": "R-402",
+        "history_last_2h_kwh": [
+            0.27,
+            1.1,
+            1.15,
+            0.81,
+            1.06,
+            0.71,
+            0.27,
+            1.13
+        ],
+        "transmitted_last_gasp": true,
+        "last_gasp_timestamp": "2026-05-27T16:00:00Z"
+    }
+]
