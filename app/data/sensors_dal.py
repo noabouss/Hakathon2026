@@ -1,12 +1,10 @@
 import json
 import os
 
-
 def load_json_data(file_name):
     """
     פונקציה גנרית לקריאת קובץ JSON מהתיקייה הראשית של הפרויקט
     """
-    # מכיוון שהקבצים נמצאים בתיקייה הראשית, נחפש אותם שם
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
     file_path = os.path.join(base_dir, file_name)
 
@@ -17,20 +15,19 @@ def load_json_data(file_name):
     with open(file_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
-
 def load_all_sensors_data():
     """
-    פונקציה שטוענת את כל שלושת מאגרי המידע שלנו ומחזירה אותם כמילון אחד מסודר
+    טעינת כל 8 ישויות הנתונים הנפרדות מהקבצים והחזרתן כמילון אחד מסודר
     """
-    print("Loading data from mock databases (JSONs)...")
-
-    # טעינת שלושת הקבצים
-    bim_data = load_json_data('building_bim.json')
-    meters_data = load_json_data('smart_meters_historical.json')
-    ble_data = load_json_data('ble_active_signals.json')
+    print("Loading data from 8 separate mock databases...")
 
     return {
-        "bim": bim_data,
-        "meters": meters_data,
-        "ble": ble_data
+        "missile_impact": load_json_data('missile_impact.json'),
+        "building_history": load_json_data('building_history.json'),
+        "resident_registry": load_json_data('resident_registry.json'),
+        "bim": load_json_data('building_bim.json'),
+        "meters": load_json_data('smart_meters_historical.json'),
+        "cellular": load_json_data('cellular_telemetry.json'),
+        "wifi": load_json_data('wifi_routers.json'),
+        "ble": load_json_data('ble_active_signals.json')
     }
