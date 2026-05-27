@@ -1,27 +1,25 @@
-from app.data.sensors_dal import load_all_sensors_data
+# שינינו את שם הפונקציה המיובאת
+from app.data.sensors_dal import get_all_sensors_data
 from app.logic.fusion_engine import calculate_u_sar_priority
-
 
 def main():
     print("====================================================================")
     print(" 🛡️  USAR 3D MULTI-LAYERED SPATIAL FUSION ENGINE - COMMAND POST v2026")
     print("====================================================================")
 
-    # 1. טעינת הנתונים (Data Layer)
-    data = load_all_sensors_data()
+    # 1. טעינת הנתונים (Data Layer) - קריאה לפונקציה המעודכנת
+    data = get_all_sensors_data()
 
-    # בדיקת תקינות טעינה
-    all_loaded = all(data[key] is not None for key in data)
-
-    if not all_loaded:
-        print("\n[ERROR] Failed to load one or more data sources. Please run generate_data.py first.")
+    # בדיקת תקינות טעינה - כאן נבדוק אם המילון ריק או אם הנתונים לא נטענו
+    if not data:
+        print("\n[ERROR] Failed to load data. Ensure 'mock_data' folder exists.")
         return
 
     print("\n[SUCCESS] All 8 separate operational data layers synchronized.")
     print("🚀 Triggering Probability Fusion Analytics Engine...")
     print("--------------------------------------------------------------------\n")
 
-    # 2. הרצת מנוע ההיתוך וההסתברויות (Logic Layer)
+    # 2. הרצת מנוע ההיתוך
     triage_dashboard = calculate_u_sar_priority(data)
 
     # 3. הצגת הפלט הפיקודי הממוין (Presentation Layer)
