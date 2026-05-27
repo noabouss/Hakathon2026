@@ -1,12 +1,19 @@
 import json
 import os
 
+# משתנה גלובלי שישמור את הנתונים בזיכרון (Cache)
+_cached_data = None
+
+
 def load_json_data(file_name):
     """
-    פונקציה גנרית לקריאת קובץ JSON מהתיקייה הראשית של הפרויקט
+    פונקציה גנרית לקריאת קובץ JSON מתוך תיקיית mock_data
     """
+    # עולים 3 רמות למעלה מ-app/data/sensors_dal.py אל תיקיית השורש
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-    file_path = os.path.join(base_dir, file_name)
+
+    # הוספנו כאן את 'mock_data' לנתיב החיפוש!
+    file_path = os.path.join(base_dir, 'mock_data', file_name)
 
     if not os.path.exists(file_path):
         print(f"Error: Could not find {file_path}")
@@ -15,13 +22,21 @@ def load_json_data(file_name):
     with open(file_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
-def load_all_sensors_data():
-    """
-    טעינת כל 8 ישויות הנתונים הנפרדות מהקבצים והחזרתן כמילון אחד מסודר
-    """
-    print("Loading data from 8 separate mock databases...")
 
-    return {
+def get_all_sensors_data(force_reload=False):
+    """
+    מחזיר את כל הנתונים כמילון אחד.
+    משתמש ב-Cache כדי לא להכביד על קריאות חוזרות מהדיסק בכל פעם שהאלגוריתם רץ.
+    """
+    global _cached_data
+
+    # אם הנתונים כבר נטענו לזיכרון, נחזיר אותם מיד (חיסכון עצום בזמן ריצה)
+    if _cached_data is not None and not force_reload:
+        return _cached_data
+
+    print("Loading data from mock_data directory into memory...")
+
+    _cached_data = {
         "missile_impact": load_json_data('missile_impact.json'),
         "building_history": load_json_data('building_history.json'),
         "resident_registry": load_json_data('resident_registry.json'),
@@ -31,3 +46,5 @@ def load_all_sensors_data():
         "wifi": load_json_data('wifi_routers.json'),
         "ble": load_json_data('ble_active_signals.json')
     }
+
+    return _cached_data

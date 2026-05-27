@@ -185,13 +185,21 @@ def generate_all_separate_entities():
         "ble_active_signals.json": ble_active_signals
     }
 
-    # כתיבת כל הקבצים בנפרד
+    # 1. הגדרת תיקיית היעד לנתונים
+    output_dir = "mock_data"
+
+    # 2. יצירת התיקייה אוטומטית אם היא עדיין לא קיימת
+    os.makedirs(output_dir, exist_ok=True)
+
+    # 3. כתיבת כל הקבצים בנפרד לתוך התיקייה
     for filename, content in all_files.items():
-        with open(filename, 'w', encoding='utf-8') as f:
+        # מחבר את שם התיקייה ושם הקובץ (למשל: mock_data/missile_impact.json)
+        file_path = os.path.join(output_dir, filename)
+
+        with open(file_path, 'w', encoding='utf-8') as f:
             json.dump(content, f, indent=4, ensure_ascii=False)
 
-    print(f"[SUCCESS] All 8 distinct JSON files written successfully.")
-
+    print(f"[SUCCESS] All 8 distinct JSON files written successfully to the '{output_dir}' directory.")
 
 if __name__ == "__main__":
     generate_all_separate_entities()
