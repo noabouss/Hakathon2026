@@ -1,0 +1,362 @@
+[
+  {
+    "meter_id": "ELEC-R-101",
+    "room_id": "R-101",
+    "resource_type": "electricity",
+    "transmitted_last_gasp": false,
+    "last_gasp_timestamp": null,
+    "history": [
+      {
+        "timestamp": "2026-05-27T14:22:37.187486Z",
+        "consumption": 0.15
+      },
+      {
+        "timestamp": "2026-05-27T14:37:37.187486Z",
+        "consumption": 0.19
+      },
+      {
+        "timestamp": "2026-05-27T14:52:37.187486Z",
+        "consumption": 1.31
+      },
+      {
+        "timestamp": "2026-05-27T15:07:37.187486Z",
+        "consumption": 0.19
+      },
+      {
+        "timestamp": "2026-05-27T15:22:37.187486Z",
+        "consumption": 0.17
+      },
+      {
+        "timestamp": "2026-05-27T15:37:37.187486Z",
+        "consumption": 1.44
+      },
+      {
+        "timestamp": "2026-05-27T15:52:37.187486Z",
+        "consumption": 0.95
+      },
+      {
+        "timestamp": "2026-05-27T16:07:37.187486Z",
+        "consumption": 1.47
+      },
+      {
+        "timestamp": "2026-05-27T16:22:37.187486Z",
+        "consumption": 0.34
+      }
+    ]
+  },
+  {
+    "meter_id": "ELEC-R-102",
+    "room_id": "R-102",
+    "resource_type": "electricity",
+    "transmitted_last_gasp": false,
+    "last_gasp_timestamp": null,
+    "history": [
+      {
+        "timestamp": "2026-05-27T14:22:37.187486Z",
+        "consumption": 0.93
+      },
+      {
+        "timestamp": "2026-05-27T14:37:37.187486Z",
+        "consumption": 0.68
+      },
+      {
+        "timestamp": "2026-05-27T14:52:37.187486Z",
+        "consumption": 1.44
+      },
+      {
+        "timestamp": "2026-05-27T15:07:37.187486Z",
+        "consumption": 0.94
+      },
+      {
+        "timestamp": "2026-05-27T15:22:37.187486Z",
+        "consumption": 0.73
+      },
+      {
+        "timestamp": "2026-05-27T15:37:37.187486Z",
+        "consumption": 0.23
+      },
+      {
+        "timestamp": "2026-05-27T15:52:37.187486Z",
+        "consumption": 0.69
+      },
+      {
+        "timestamp": "2026-05-27T16:07:37.187486Z",
+        "consumption": 0.21
+      },
+      {
+        "timestamp": "2026-05-27T16:22:37.187486Z",
+        "consumption": 0.23
+      }
+    ]
+  },
+  {
+    "meter_id": "ELEC-R-201",
+    "room_id": "R-201",
+    "resource_type": "electricity",
+    "transmitted_last_gasp": true,
+    "last_gasp_timestamp": "2026-05-27T16:22:37.187486Z",
+    "history": [
+      {
+        "timestamp": "2026-05-27T14:22:37.187486Z",
+        "consumption": 1.45
+      },
+      {
+        "timestamp": "2026-05-27T14:37:37.187486Z",
+        "consumption": 1.08
+      },
+      {
+        "timestamp": "2026-05-27T14:52:37.187486Z",
+        "consumption": 1.45
+      },
+      {
+        "timestamp": "2026-05-27T15:07:37.187486Z",
+        "consumption": 0.25
+      },
+      {
+        "timestamp": "2026-05-27T15:22:37.187486Z",
+        "consumption": 0.3
+      },
+      {
+        "timestamp": "2026-05-27T15:37:37.187486Z",
+        "consumption": 0.66
+      },
+      {
+        "timestamp": "2026-05-27T15:52:37.187486Z",
+        "consumption": 0.19
+      },
+      {
+        "timestamp": "2026-05-27T16:07:37.187486Z",
+        "consumption": 0.2
+      },
+      {
+        "timestamp": "2026-05-27T16:22:37.187486Z",
+        "consumption": 0.0
+      }
+    ]
+  },
+  {
+    "meter_id": "ELEC-R-202",
+    "room_id": "R-202",
+    "resource_type": "electricity",
+    "transmitted_last_gasp": true,
+    "last_gasp_timestamp": "2026-05-27T16:22:37.187486Z",
+    "history": [
+      {
+        "timestamp": "2026-05-27T14:22:37.187486Z",
+        "consumption": 1.13
+      },
+      {
+        "timestamp": "2026-05-27T14:37:37.187486Z",
+        "consumption": 0.84
+      },
+      {
+        "timestamp": "2026-05-27T14:52:37.187486Z",
+        "consumption": 1.37
+      },
+      {
+        "timestamp": "2026-05-27T15:07:37.187486Z",
+        "consumption": 1.02
+      },
+      {
+        "timestamp": "2026-05-27T15:22:37.187486Z",
+        "consumption": 0.23
+      },
+      {
+        "timestamp": "2026-05-27T15:37:37.187486Z",
+        "consumption": 0.33
+      },
+      {
+        "timestamp": "2026-05-27T15:52:37.187486Z",
+        "consumption": 0.74
+      },
+      {
+        "timestamp": "2026-05-27T16:07:37.187486Z",
+        "consumption": 1.23
+      },
+      {
+        "timestamp": "2026-05-27T16:22:37.187486Z",
+        "consumption": 0.0
+      }
+    ]
+  },
+  {
+    "meter_id": "ELEC-R-301",
+    "room_id": "R-301",
+    "resource_type": "electricity",
+    "transmitted_last_gasp": true,
+    "last_gasp_timestamp": "2026-05-27T16:22:37.187486Z",
+    "history": [
+      {
+        "timestamp": "2026-05-27T14:22:37.187486Z",
+        "consumption": 1.04
+      },
+      {
+        "timestamp": "2026-05-27T14:37:37.187486Z",
+        "consumption": 0.61
+      },
+      {
+        "timestamp": "2026-05-27T14:52:37.187486Z",
+        "consumption": 0.15
+      },
+      {
+        "timestamp": "2026-05-27T15:07:37.187486Z",
+        "consumption": 0.12
+      },
+      {
+        "timestamp": "2026-05-27T15:22:37.187486Z",
+        "consumption": 1.0
+      },
+      {
+        "timestamp": "2026-05-27T15:37:37.187486Z",
+        "consumption": 0.4
+      },
+      {
+        "timestamp": "2026-05-27T15:52:37.187486Z",
+        "consumption": 0.99
+      },
+      {
+        "timestamp": "2026-05-27T16:07:37.187486Z",
+        "consumption": 0.62
+      },
+      {
+        "timestamp": "2026-05-27T16:22:37.187486Z",
+        "consumption": 0.0
+      }
+    ]
+  },
+  {
+    "meter_id": "ELEC-R-302",
+    "room_id": "R-302",
+    "resource_type": "electricity",
+    "transmitted_last_gasp": true,
+    "last_gasp_timestamp": "2026-05-27T16:22:37.187486Z",
+    "history": [
+      {
+        "timestamp": "2026-05-27T14:22:37.187486Z",
+        "consumption": 1.22
+      },
+      {
+        "timestamp": "2026-05-27T14:37:37.187486Z",
+        "consumption": 0.64
+      },
+      {
+        "timestamp": "2026-05-27T14:52:37.187486Z",
+        "consumption": 0.78
+      },
+      {
+        "timestamp": "2026-05-27T15:07:37.187486Z",
+        "consumption": 0.93
+      },
+      {
+        "timestamp": "2026-05-27T15:22:37.187486Z",
+        "consumption": 1.26
+      },
+      {
+        "timestamp": "2026-05-27T15:37:37.187486Z",
+        "consumption": 1.35
+      },
+      {
+        "timestamp": "2026-05-27T15:52:37.187486Z",
+        "consumption": 0.44
+      },
+      {
+        "timestamp": "2026-05-27T16:07:37.187486Z",
+        "consumption": 1.33
+      },
+      {
+        "timestamp": "2026-05-27T16:22:37.187486Z",
+        "consumption": 0.0
+      }
+    ]
+  },
+  {
+    "meter_id": "ELEC-R-401",
+    "room_id": "R-401",
+    "resource_type": "electricity",
+    "transmitted_last_gasp": true,
+    "last_gasp_timestamp": "2026-05-27T16:22:37.187486Z",
+    "history": [
+      {
+        "timestamp": "2026-05-27T14:22:37.187486Z",
+        "consumption": 0.17
+      },
+      {
+        "timestamp": "2026-05-27T14:37:37.187486Z",
+        "consumption": 0.51
+      },
+      {
+        "timestamp": "2026-05-27T14:52:37.187486Z",
+        "consumption": 0.27
+      },
+      {
+        "timestamp": "2026-05-27T15:07:37.187486Z",
+        "consumption": 0.39
+      },
+      {
+        "timestamp": "2026-05-27T15:22:37.187486Z",
+        "consumption": 0.17
+      },
+      {
+        "timestamp": "2026-05-27T15:37:37.187486Z",
+        "consumption": 0.98
+      },
+      {
+        "timestamp": "2026-05-27T15:52:37.187486Z",
+        "consumption": 1.37
+      },
+      {
+        "timestamp": "2026-05-27T16:07:37.187486Z",
+        "consumption": 1.24
+      },
+      {
+        "timestamp": "2026-05-27T16:22:37.187486Z",
+        "consumption": 0.0
+      }
+    ]
+  },
+  {
+    "meter_id": "ELEC-R-402",
+    "room_id": "R-402",
+    "resource_type": "electricity",
+    "transmitted_last_gasp": true,
+    "last_gasp_timestamp": "2026-05-27T16:22:37.187486Z",
+    "history": [
+      {
+        "timestamp": "2026-05-27T14:22:37.187486Z",
+        "consumption": 0.37
+      },
+      {
+        "timestamp": "2026-05-27T14:37:37.187486Z",
+        "consumption": 1.15
+      },
+      {
+        "timestamp": "2026-05-27T14:52:37.187486Z",
+        "consumption": 1.2
+      },
+      {
+        "timestamp": "2026-05-27T15:07:37.187486Z",
+        "consumption": 0.11
+      },
+      {
+        "timestamp": "2026-05-27T15:22:37.187486Z",
+        "consumption": 0.14
+      },
+      {
+        "timestamp": "2026-05-27T15:37:37.187486Z",
+        "consumption": 0.8
+      },
+      {
+        "timestamp": "2026-05-27T15:52:37.187486Z",
+        "consumption": 1.01
+      },
+      {
+        "timestamp": "2026-05-27T16:07:37.187486Z",
+        "consumption": 1.2
+      },
+      {
+        "timestamp": "2026-05-27T16:22:37.187486Z",
+        "consumption": 0.0
+      }
+    ]
+  }
+]

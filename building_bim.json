@@ -1,0 +1,222 @@
+{
+  "building_id": "BLD-ALPHA-01",
+  "floors": 4,
+  "rooms": [
+    {
+      "room_id": "R-101",
+      "floor": 1,
+      "original_coordinates": {
+        "x_min": 0.0,
+        "x_max": 5.0,
+        "y_min": 0.0,
+        "y_max": 5.0,
+        "z_min": 0.0,
+        "z_max": 3.0
+      },
+      "post_collapse_coordinates": {
+        "x_min": 0.392074009691983,
+        "x_max": 5.392074009691983,
+        "y_min": 0.0,
+        "y_max": 5.0,
+        "z_min": 0,
+        "z_max": 3.0
+      },
+      "structural_damage_pct": 26.14,
+      "heavy_furniture": [
+        {
+          "type": "bed",
+          "creates_void": true
+        }
+      ]
+    },
+    {
+      "room_id": "R-102",
+      "floor": 1,
+      "original_coordinates": {
+        "x_min": 5.0,
+        "x_max": 10.0,
+        "y_min": 0.0,
+        "y_max": 5.0,
+        "z_min": 0.0,
+        "z_max": 3.0
+      },
+      "post_collapse_coordinates": {
+        "x_min": 5.392074009691983,
+        "x_max": 10.392074009691983,
+        "y_min": 0.0,
+        "y_max": 5.0,
+        "z_min": 0,
+        "z_max": 3.0
+      },
+      "structural_damage_pct": 26.14,
+      "heavy_furniture": [
+        {
+          "type": "bed",
+          "creates_void": true
+        }
+      ]
+    },
+    {
+      "room_id": "R-201",
+      "floor": 2,
+      "original_coordinates": {
+        "x_min": 0.0,
+        "x_max": 5.0,
+        "y_min": 0.0,
+        "y_max": 5.0,
+        "z_min": 3.0,
+        "z_max": 6.0
+      },
+      "post_collapse_coordinates": {
+        "x_min": 0.6708438024111499,
+        "x_max": 5.67084380241115,
+        "y_min": 0.0,
+        "y_max": 5.0,
+        "z_min": 1.92664991614216,
+        "z_max": 4.92664991614216
+      },
+      "structural_damage_pct": 44.72,
+      "heavy_furniture": [
+        {
+          "type": "bed",
+          "creates_void": true
+        }
+      ]
+    },
+    {
+      "room_id": "R-202",
+      "floor": 2,
+      "original_coordinates": {
+        "x_min": 5.0,
+        "x_max": 10.0,
+        "y_min": 0.0,
+        "y_max": 5.0,
+        "z_min": 3.0,
+        "z_max": 6.0
+      },
+      "post_collapse_coordinates": {
+        "x_min": 5.67084380241115,
+        "x_max": 10.67084380241115,
+        "y_min": 0.0,
+        "y_max": 5.0,
+        "z_min": 1.92664991614216,
+        "z_max": 4.92664991614216
+      },
+      "structural_damage_pct": 44.72,
+      "heavy_furniture": [
+        {
+          "type": "bed",
+          "creates_void": true
+        }
+      ]
+    },
+    {
+      "room_id": "R-301",
+      "floor": 3,
+      "original_coordinates": {
+        "x_min": 0.0,
+        "x_max": 5.0,
+        "y_min": 0.0,
+        "y_max": 5.0,
+        "z_min": 6.0,
+        "z_max": 9.0
+      },
+      "post_collapse_coordinates": {
+        "x_min": 0.9277238428870201,
+        "x_max": 5.92772384288702,
+        "y_min": 0.0,
+        "y_max": 5.0,
+        "z_min": 3.0312837027615354,
+        "z_max": 6.031283702761535
+      },
+      "structural_damage_pct": 61.85,
+      "heavy_furniture": [
+        {
+          "type": "bed",
+          "creates_void": true
+        }
+      ]
+    },
+    {
+      "room_id": "R-302",
+      "floor": 3,
+      "original_coordinates": {
+        "x_min": 5.0,
+        "x_max": 10.0,
+        "y_min": 0.0,
+        "y_max": 5.0,
+        "z_min": 6.0,
+        "z_max": 9.0
+      },
+      "post_collapse_coordinates": {
+        "x_min": 5.92772384288702,
+        "x_max": 10.927723842887021,
+        "y_min": 0.0,
+        "y_max": 5.0,
+        "z_min": 3.0312837027615354,
+        "z_max": 6.031283702761535
+      },
+      "structural_damage_pct": 61.85,
+      "heavy_furniture": [
+        {
+          "type": "bed",
+          "creates_void": true
+        }
+      ]
+    },
+    {
+      "room_id": "R-401",
+      "floor": 4,
+      "original_coordinates": {
+        "x_min": 0.0,
+        "x_max": 5.0,
+        "y_min": 0.0,
+        "y_max": 5.0,
+        "z_min": 9.0,
+        "z_max": 12.0
+      },
+      "post_collapse_coordinates": {
+        "x_min": 1.1159427126065697,
+        "x_max": 6.11594271260657,
+        "y_min": 0.0,
+        "y_max": 5.0,
+        "z_min": 3.6434749794884658,
+        "z_max": 6.643474979488466
+      },
+      "structural_damage_pct": 74.4,
+      "heavy_furniture": [
+        {
+          "type": "bed",
+          "creates_void": true
+        }
+      ]
+    },
+    {
+      "room_id": "R-402",
+      "floor": 4,
+      "original_coordinates": {
+        "x_min": 5.0,
+        "x_max": 10.0,
+        "y_min": 0.0,
+        "y_max": 5.0,
+        "z_min": 9.0,
+        "z_max": 12.0
+      },
+      "post_collapse_coordinates": {
+        "x_min": 6.11594271260657,
+        "x_max": 11.11594271260657,
+        "y_min": 0.0,
+        "y_max": 5.0,
+        "z_min": 3.6434749794884658,
+        "z_max": 6.643474979488466
+      },
+      "structural_damage_pct": 74.4,
+      "heavy_furniture": [
+        {
+          "type": "bed",
+          "creates_void": true
+        }
+      ]
+    }
+  ]
+}
