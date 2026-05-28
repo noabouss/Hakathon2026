@@ -1,0 +1,98 @@
+[
+    {
+        "occupant_id": "OCC-R-101-A",
+        "home_room_id": "R-101",
+        "telemetry": {
+            "rssi_dbm": -57.2,
+            "battery_pct": 83,
+            "vital_signs": {
+                "heart_rate_bpm": 91,
+                "movement_index": 0.74
+            }
+        }
+    },
+    {
+        "occupant_id": "OCC-R-102-A",
+        "home_room_id": "R-102",
+        "telemetry": {
+            "rssi_dbm": -56.0,
+            "battery_pct": 78,
+            "vital_signs": {
+                "heart_rate_bpm": 94,
+                "movement_index": 0.05
+            }
+        }
+    },
+    {
+        "occupant_id": "OCC-R-201-A",
+        "home_room_id": "R-201",
+        "telemetry": {
+            "rssi_dbm": -67.3,
+            "battery_pct": 45,
+            "vital_signs": {
+                "heart_rate_bpm": 100,
+                "movement_index": 0.55
+            }
+        }
+    },
+    {
+        "occupant_id": "OCC-R-202-A",
+        "home_room_id": "R-202",
+        "telemetry": {
+            "rssi_dbm": -60.9,
+            "battery_pct": 50,
+            "vital_signs": {
+                "heart_rate_bpm": 107,
+                "movement_index": 0.55
+            }
+        }
+    },
+    {
+        "occupant_id": "OCC-R-301-A",
+        "home_room_id": "R-301",
+        "telemetry": {
+            "rssi_dbm": -66.5,
+            "battery_pct": 70,
+            "vital_signs": {
+                "heart_rate_bpm": 114,
+                "movement_index": 0.38
+            }
+        }
+    },
+    {
+        "occupant_id": "OCC-R-302-A",
+        "home_room_id": "R-302",
+        "telemetry": {
+            "rssi_dbm": -64.1,
+            "battery_pct": 58,
+            "vital_signs": {
+                "heart_rate_bpm": 117,
+                "movement_index": 0.95
+            }
+        }
+    },
+    {
+        "occupant_id": "OCC-R-401-A",
+        "home_room_id": "R-401",
+        "telemetry": {
+            "rssi_dbm": -74.4,
+            "battery_pct": 46,
+            "vital_signs": {
+                "heart_rate_bpm": 130,
+                "movement_index": 0.26
+            }
+        }
+    },
+    {
+        "occupant_id": "OCC-R-402-A",
+        "home_room_id": "R-402",
+        "telemetry": {
+            "rssi_dbm": -67.7,
+            "battery_pct": 82,
+            "vital_signs": {
+                "heart_rate_bpm": 124,
+                "movement_index": 0.1
+            }
+        }
+    }
+]

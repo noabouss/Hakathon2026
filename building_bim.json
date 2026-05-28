@@ -1,0 +1,156 @@
+{
+    "rooms": [
+        {
+            "room_id": "R-101",
+            "room_name": "1st Floor - Living Room",
+            "original_coordinates": {
+                "x": 5.0,
+                "y": 5.0,
+                "z": 3.0
+            },
+            "post_collapse_coordinates": {
+                "x": 5.52,
+                "y": 5.0,
+                "z": 2.35
+            },
+            "structural_damage_pct": 26,
+            "heavy_furniture": {
+                "type": "Dining Table",
+                "creates_void": false
+            }
+        },
+        {
+            "room_id": "R-102",
+            "room_name": "1st Floor - Bedroom",
+            "original_coordinates": {
+                "x": 5.0,
+                "y": 12.0,
+                "z": 3.0
+            },
+            "post_collapse_coordinates": {
+                "x": 5.52,
+                "y": 12.0,
+                "z": 2.35
+            },
+            "structural_damage_pct": 26,
+            "heavy_furniture": {
+                "type": "Heavy Bed",
+                "creates_void": true
+            }
+        },
+        {
+            "room_id": "R-201",
+            "room_name": "2nd Floor - Living Room",
+            "original_coordinates": {
+                "x": 5.0,
+                "y": 5.0,
+                "z": 6.0
+            },
+            "post_collapse_coordinates": {
+                "x": 5.62,
+                "y": 5.0,
+                "z": 4.29
+            },
+            "structural_damage_pct": 31,
+            "heavy_furniture": {
+                "type": "Dining Table",
+                "creates_void": false
+            }
+        },
+        {
+            "room_id": "R-202",
+            "room_name": "2nd Floor - Bedroom",
+            "original_coordinates": {
+                "x": 5.0,
+                "y": 12.0,
+                "z": 6.0
+            },
+            "post_collapse_coordinates": {
+                "x": 5.6,
+                "y": 12.0,
+                "z": 4.35
+            },
+            "structural_damage_pct": 30,
+            "heavy_furniture": {
+                "type": "Heavy Bed",
+                "creates_void": true
+            }
+        },
+        {
+            "room_id": "R-301",
+            "room_name": "3rd Floor - Living Room",
+            "original_coordinates": {
+                "x": 12.0,
+                "y": 5.0,
+                "z": 9.0
+            },
+            "post_collapse_coordinates": {
+                "x": 13.32,
+                "y": 5.0,
+                "z": 3.39
+            },
+            "structural_damage_pct": 66,
+            "heavy_furniture": {
+                "type": "Dining Table",
+                "creates_void": false
+            }
+        },
+        {
+            "room_id": "R-302",
+            "room_name": "3rd Floor - Bedroom",
+            "original_coordinates": {
+                "x": 12.0,
+                "y": 12.0,
+                "z": 9.0
+            },
+            "post_collapse_coordinates": {
+                "x": 13.16,
+                "y": 12.0,
+                "z": 4.07
+            },
+            "structural_damage_pct": 58,
+            "heavy_furniture": {
+                "type": "Heavy Bed",
+                "creates_void": true
+            }
+        },
+        {
+            "room_id": "R-401",
+            "room_name": "4th Floor - Main Room",
+            "original_coordinates": {
+                "x": 12.0,
+                "y": 5.0,
+                "z": 12.0
+            },
+            "post_collapse_coordinates": {
+                "x": 13.72,
+                "y": 5.0,
+                "z": 2.11
+            },
+            "structural_damage_pct": 86,
+            "heavy_furniture": {
+                "type": "Dining Table",
+                "creates_void": true
+            }
+        },
+        {
+            "room_id": "R-402",
+            "room_name": "4th Floor - Kitchen",
+            "original_coordinates": {
+                "x": 12.0,
+                "y": 12.0,
+                "z": 12.0
+            },
+            "post_collapse_coordinates": {
+                "x": 13.38,
+                "y": 12.0,
+                "z": 4.07
+            },
+            "structural_damage_pct": 69,
+            "heavy_furniture": {
+                "type": "Dining Table",
+                "creates_void": false
+            }
+        }
+    ]
+}
