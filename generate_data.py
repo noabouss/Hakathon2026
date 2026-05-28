@@ -6,206 +6,97 @@ import random
 def generate_all_separate_entities():
     print("Generating comprehensive, multi-building baseline configurations for USAR Engine...")
 
-    # הגדרת שם התיקייה באותיות קטנות ויצירתה במידה ולא קיימת
     target_folder = "mock_data"
     if not os.path.exists(target_folder):
         os.makedirs(target_folder)
         print(f"Created directory: '{target_folder}'")
 
     # ==========================================
-    # 1. BUILDING HISTORY (מאגר היסטוריית והנדסת המבנים בשכונה)
+    # 1. BUILDING HISTORY
     # ==========================================
     building_history = [
-        {
-            "building_id": "B-BLDG-99",
-            "building_name": "Old Residential Block",
-            "year_built": 1978,
-            "construction_standard": "Pre-Structural-Standard-413",
-            "primary_materials": ["Reinforced Concrete Columns", "Unreinforced Hollow Blocks"],
-            "structural_integrity_pre_event": 85.0
-        },
-        {
-            "building_id": "B-BLDG-105",
-            "building_name": "Modern Residential Tower",
-            "year_built": 2015,
-            "construction_standard": "Tamam-38-Compliant",
-            "primary_materials": ["High-Strength Concrete", "Steel Shear Walls", "Safe Rooms (MAMAD)"],
-            "structural_integrity_pre_event": 98.5
-        },
-        {
-            "building_id": "B-BLDG-202",
-            "building_name": "Regional Elementary School",
-            "year_built": 1995,
-            "construction_standard": "Standard-413-Public",
-            "primary_materials": ["Precast Concrete Panels", "Steel Trusses"],
-            "structural_integrity_pre_event": 90.0
-        }
+        {"building_id": "B-BLDG-99", "building_name": "Old Residential Block", "year_built": 1978,
+         "construction_standard": "Pre-Structural-Standard-413",
+         "primary_materials": ["Reinforced Concrete Columns", "Unreinforced Hollow Blocks"],
+         "structural_integrity_pre_event": 85.0},
+        {"building_id": "B-BLDG-105", "building_name": "Modern Residential Tower", "year_built": 2015,
+         "construction_standard": "Tamam-38-Compliant",
+         "primary_materials": ["High-Strength Concrete", "Steel Shear Walls", "Safe Rooms (MAMAD)"],
+         "structural_integrity_pre_event": 98.5},
+        {"building_id": "B-BLDG-202", "building_name": "Regional Elementary School", "year_built": 1995,
+         "construction_standard": "Standard-413-Public",
+         "primary_materials": ["Precast Concrete Panels", "Steel Trusses"], "structural_integrity_pre_event": 90.0}
     ]
 
     # ==========================================
-    # 2. RESIDENT REGISTRY (מרשם האוכלוסייה - כולל טלפון וסטטוס שיחה מובנה לכל אדם)
+    # 2. RESIDENT REGISTRY
     # ==========================================
     resident_registry = [
-        # בניין 99 - הבניין המקורי
-        {
-            "occupant_id": "OCC-R-101-A",
-            "name": "Yossi Levi",
-            "age": 42,
-            "associated_building": "B-BLDG-99",
-            "home_room_id": "R-99-101",
-            "mobility_index": 1.0,
-            "phone_number": "+972-50-1234567",
-            "phone_call_status": {"called": True, "answered": True, "call_duration_seconds": 45,
-                                  "device_status": "Active"}
-        },
-        {
-            "occupant_id": "OCC-R-102-A",
-            "name": "Grandpa Abraham",
-            "age": 81,
-            "associated_building": "B-BLDG-99",
-            "home_room_id": "R-99-102",
-            "mobility_index": 0.2,
-            "phone_number": "+972-52-9876543",
-            "phone_call_status": {"called": True, "answered": False, "reason": "No Answer / Ringing",
-                                  "device_status": "Active"}
-        },
-        {
-            "occupant_id": "OCC-R-201-A",
-            "name": "Noam Cohen",
-            "age": 28,
-            "associated_building": "B-BLDG-99",
-            "home_room_id": "R-99-201",
-            "mobility_index": 1.0,
-            "phone_number": "+972-54-1112233",
-            "phone_call_status": {"called": True, "answered": True, "call_duration_seconds": 12,
-                                  "device_status": "Active"}
-        },
-        {
-            "occupant_id": "OCC-R-202-A",
-            "name": "Michal Cohen",
-            "age": 26,
-            "associated_building": "B-BLDG-99",
-            "home_room_id": "R-99-202",
-            "mobility_index": 1.0,
-            "phone_number": "+972-54-4445566",
-            "phone_call_status": {"called": True, "answered": False, "reason": "Line Disconnected Abruptly",
-                                  "device_status": "Disconnected"}
-        },
-        {
-            "occupant_id": "OCC-R-301-A",
-            "name": "Baby Emily",
-            "age": 1,
-            "associated_building": "B-BLDG-99",
-            "home_room_id": "R-99-301",
-            "mobility_index": 0.0,
-            "phone_number": "None",  # תינוקת - אין טלפון
-            "phone_call_status": {"called": False, "answered": False, "reason": "No Device Registered",
-                                  "device_status": "None"}
-        },
-        {
-            "occupant_id": "OCC-R-302-A",
-            "name": "David Levi",
-            "age": 12,
-            "associated_building": "B-BLDG-99",
-            "home_room_id": "R-99-302",
-            "mobility_index": 1.0,
-            "phone_number": "+972-53-7778899",
-            "phone_call_status": {"called": True, "answered": True, "call_duration_seconds": 120,
-                                  "device_status": "Active"}
-        },
-        {
-            "occupant_id": "OCC-R-401-A",
-            "name": "Tomer Green",
-            "age": 35,
-            "associated_building": "B-BLDG-99",
-            "home_room_id": "R-99-401",
-            "mobility_index": 1.0,
-            "phone_number": "+972-50-5556677",
-            "phone_call_status": {"called": True, "answered": True, "call_duration_seconds": 5,
-                                  "device_status": "Active"}
-        },
-        {
-            "occupant_id": "OCC-R-402-A",
-            "name": "Elena Rostova",
-            "age": 67,
-            "associated_building": "B-BLDG-99",
-            "home_room_id": "R-99-402",
-            "mobility_index": 0.5,
-            "phone_number": "+972-58-3334455",
-            "phone_call_status": {"called": True, "answered": False, "reason": "Destination Unreachable / Dead Zone",
-                                  "device_status": "Unreachable"}
-        },
+        # Building 99
+        {"occupant_id": "OCC-R-101-A", "name": "Yossi Levi", "age": 42, "associated_building": "B-BLDG-99",
+         "home_room_id": "R-99-101", "mobility_index": 1.0, "phone_number": "+972-50-1234567",
+         "phone_call_status": {"called": True, "answered": True, "call_duration_seconds": 45,
+                               "device_status": "Active"}},
+        {"occupant_id": "OCC-R-102-A", "name": "Grandpa Abraham", "age": 81, "associated_building": "B-BLDG-99",
+         "home_room_id": "R-99-102", "mobility_index": 0.2, "phone_number": "+972-52-9876543",
+         "phone_call_status": {"called": True, "answered": False, "reason": "No Answer / Ringing",
+                               "device_status": "Active"}},
+        {"occupant_id": "OCC-R-201-A", "name": "Noam Cohen", "age": 28, "associated_building": "B-BLDG-99",
+         "home_room_id": "R-99-201", "mobility_index": 1.0, "phone_number": "+972-54-1112233",
+         "phone_call_status": {"called": True, "answered": True, "call_duration_seconds": 12,
+                               "device_status": "Active"}},
+        {"occupant_id": "OCC-R-202-A", "name": "Michal Cohen", "age": 26, "associated_building": "B-BLDG-99",
+         "home_room_id": "R-99-202", "mobility_index": 1.0, "phone_number": "+972-54-4445566",
+         "phone_call_status": {"called": True, "answered": False, "reason": "Line Disconnected Abruptly",
+                               "device_status": "Disconnected"}},
+        {"occupant_id": "OCC-R-301-A", "name": "Baby Emily", "age": 1, "associated_building": "B-BLDG-99",
+         "home_room_id": "R-99-301", "mobility_index": 0.0, "phone_number": "None",
+         "phone_call_status": {"called": False, "answered": False, "reason": "No Device Registered",
+                               "device_status": "None"}},
+        {"occupant_id": "OCC-R-302-A", "name": "David Levi", "age": 12, "associated_building": "B-BLDG-99",
+         "home_room_id": "R-99-302", "mobility_index": 1.0, "phone_number": "+972-53-7778899",
+         "phone_call_status": {"called": True, "answered": True, "call_duration_seconds": 120,
+                               "device_status": "Active"}},
+        {"occupant_id": "OCC-R-401-A", "name": "Tomer Green", "age": 35, "associated_building": "B-BLDG-99",
+         "home_room_id": "R-99-401", "mobility_index": 1.0, "phone_number": "+972-50-5556677",
+         "phone_call_status": {"called": True, "answered": True, "call_duration_seconds": 5,
+                               "device_status": "Active"}},
+        {"occupant_id": "OCC-R-402-A", "name": "Elena Rostova", "age": 67, "associated_building": "B-BLDG-99",
+         "home_room_id": "R-99-402", "mobility_index": 0.5, "phone_number": "+972-58-3334455",
+         "phone_call_status": {"called": True, "answered": False, "reason": "Destination Unreachable / Dead Zone",
+                               "device_status": "Unreachable"}},
 
-        # בניין 105 - מגדל מודרני עם ממ"דים
-        {
-            "occupant_id": "OCC-105-A",
-            "name": "Dana Regev",
-            "age": 31,
-            "associated_building": "B-BLDG-105",
-            "home_room_id": "R-105-101",
-            "mobility_index": 1.0,
-            "phone_number": "+972-52-6667788",
-            "phone_call_status": {"called": True, "answered": True, "call_duration_seconds": 95,
-                                  "device_status": "Active"}
-        },
-        {
-            "occupant_id": "OCC-105-B",
-            "name": "Eitan Regev",
-            "age": 7,
-            "associated_building": "B-BLDG-105",
-            "home_room_id": "R-105-102-MAMAD",
-            "mobility_index": 1.0,
-            "phone_number": "+972-55-1239874",
-            "phone_call_status": {"called": True, "answered": False, "reason": "Busy", "device_status": "Active"}
-        },
-        {
-            "occupant_id": "OCC-105-C",
-            "name": "Miriam Goldstein",
-            "age": 75,
-            "associated_building": "B-BLDG-105",
-            "home_room_id": "R-105-202-MAMAD",
-            "mobility_index": 0.4,
-            "phone_number": "+972-50-9990011",
-            "phone_call_status": {"called": True, "answered": False, "reason": "Device Powered Off",
-                                  "device_status": "Off"}
-        },
+        # Building 105
+        {"occupant_id": "OCC-105-A", "name": "Dana Regev", "age": 31, "associated_building": "B-BLDG-105",
+         "home_room_id": "R-105-101", "mobility_index": 1.0, "phone_number": "+972-52-6667788",
+         "phone_call_status": {"called": True, "answered": True, "call_duration_seconds": 95,
+                               "device_status": "Active"}},
+        {"occupant_id": "OCC-105-B", "name": "Eitan Regev", "age": 7, "associated_building": "B-BLDG-105",
+         "home_room_id": "R-105-102-MAMAD", "mobility_index": 1.0, "phone_number": "+972-55-1239874",
+         "phone_call_status": {"called": True, "answered": False, "reason": "Busy", "device_status": "Active"}},
+        {"occupant_id": "OCC-105-C", "name": "Miriam Goldstein", "age": 75, "associated_building": "B-BLDG-105",
+         "home_room_id": "R-105-202-MAMAD", "mobility_index": 0.4, "phone_number": "+972-50-9990011",
+         "phone_call_status": {"called": True, "answered": False, "reason": "Device Powered Off",
+                               "device_status": "Off"}},
 
-        # בניין 202 - בית ספר יסודי
-        {
-            "occupant_id": "OCC-202-TEACHER",
-            "name": "Sarah Miller (Teacher)",
-            "age": 45,
-            "associated_building": "B-BLDG-202",
-            "home_room_id": "R-202-F2",
-            "mobility_index": 1.0,
-            "phone_number": "+972-54-7771122",
-            "phone_call_status": {"called": True, "answered": True, "call_duration_seconds": 60,
-                                  "device_status": "Active"}
-        },
-        {
-            "occupant_id": "OCC-202-STUDENT1",
-            "name": "Danielle",
-            "age": 10,
-            "associated_building": "B-BLDG-202",
-            "home_room_id": "R-202-G1",
-            "mobility_index": 1.0,
-            "phone_number": "+972-50-8883344",
-            "phone_call_status": {"called": True, "answered": False, "reason": "No Answer", "device_status": "Active"}
-        },
-        {
-            "occupant_id": "OCC-202-STUDENT2",
-            "name": "Roy",
-            "age": 9,
-            "associated_building": "B-BLDG-202",
-            "home_room_id": "R-202-AUD",
-            "mobility_index": 1.0,
-            "phone_number": "+972-52-4449911",
-            "phone_call_status": {"called": True, "answered": False, "reason": "Device Powered Off",
-                                  "device_status": "Off"}
-        }
+        # Building 202
+        {"occupant_id": "OCC-202-TEACHER", "name": "Sarah Miller (Teacher)", "age": 45,
+         "associated_building": "B-BLDG-202", "home_room_id": "R-202-F2", "mobility_index": 1.0,
+         "phone_number": "+972-54-7771122",
+         "phone_call_status": {"called": True, "answered": True, "call_duration_seconds": 60,
+                               "device_status": "Active"}},
+        {"occupant_id": "OCC-202-STUDENT1", "name": "Danielle", "age": 10, "associated_building": "B-BLDG-202",
+         "home_room_id": "R-202-G1", "mobility_index": 1.0, "phone_number": "+972-50-8883344",
+         "phone_call_status": {"called": True, "answered": False, "reason": "No Answer", "device_status": "Active"}},
+        {"occupant_id": "OCC-202-STUDENT2", "name": "Roy", "age": 9, "associated_building": "B-BLDG-202",
+         "home_room_id": "R-202-AUD", "mobility_index": 1.0, "phone_number": "+972-52-4449911",
+         "phone_call_status": {"called": True, "answered": False, "reason": "Device Powered Off",
+                               "device_status": "Off"}}
     ]
 
-    # Setup המבנים לצורך חישוב ה-BIM הדינמי מראש
+    # ==========================================
+    # ROOMS SETUP (BIM Logic)
+    # ==========================================
     rooms_setup = {
         "R-99-101": {"b_id": "B-BLDG-99", "name": "1st Floor - Living Room", "orig": [5.0, 5.0, 3.0], "safe": False},
         "R-99-102": {"b_id": "B-BLDG-99", "name": "1st Floor - Bedroom", "orig": [5.0, 12.0, 3.0], "safe": False},
@@ -285,29 +176,47 @@ def generate_all_separate_entities():
     }
 
     # ==========================================
-    # 5. SMART METERS HISTORICAL
+    # 5. SMART METERS HISTORICAL (SYNCED!)
     # ==========================================
     smart_meters = []
     for b_data in building_bim["buildings"]:
         for room in b_data["rooms"]:
+            room_id = room['room_id']
+            # מניית אנשים בחדר כדי לקבוע צריכת חשמל הגיונית
+            people_in_room = len([r for r in resident_registry if r["home_room_id"] == room_id])
+
+            if people_in_room > 0:
+                base_load = round(random.uniform(0.6, 1.5), 2)  # חדר פעיל
+            else:
+                base_load = round(random.uniform(0.02, 0.08), 2)  # חדר ריק (רקע)
+
             smart_meters.append({
-                "meter_id": f"METER-{room['room_id']}",
+                "meter_id": f"METER-{room_id}",
                 "building_id": b_data["building_id"],
-                "room_id": room["room_id"],
-                "history_last_2h_kwh": [round(random.uniform(0.1, 1.4), 2) for _ in range(8)],
+                "room_id": room_id,
+                "history_last_2h_kwh": [round(base_load * random.uniform(0.9, 1.1), 2) for _ in range(8)],
                 "transmitted_last_gasp": True if room["structural_damage_pct"] > 40 else False
             })
 
     # ==========================================
-    # 6. CELLULAR TELEMETRY
+    # 6. CELLULAR TELEMETRY (SYNCED!)
     # ==========================================
+    # הנתונים עודכנו כדי להתאים לסטטוס הטלפון (סבא אברהם לא זז, מיכל כהן לכודה ולא זזה)
     steps_presets = {
-        "OCC-R-101-A": (92, "Running"), "OCC-R-102-A": (2, "Resting"),
-        "OCC-R-201-A": (45, "Walking"), "OCC-R-202-A": (0, "Resting"),
-        "OCC-R-301-A": (0, "Resting"), "OCC-R-302-A": (110, "Running"),
-        "OCC-R-401-A": (14, "Walking"), "OCC-R-402-A": (5, "Resting"),
-        "OCC-105-A": (80, "Running"), "OCC-105-B": (120, "Running"), "OCC-105-C": (4, "Resting"),
-        "OCC-202-TEACHER": (60, "Walking"), "OCC-202-STUDENT1": (140, "Running"), "OCC-202-STUDENT2": (5, "Resting")
+        "OCC-R-101-A": (92, "Running"),
+        "OCC-R-102-A": (0, "Resting"),  # סבא אברהם לא עונה (אין צעדים)
+        "OCC-R-201-A": (45, "Walking"),
+        "OCC-R-202-A": (0, "Trapped"),  # מיכל כהן (טלפון נותק)
+        "OCC-R-301-A": (0, "Resting"),
+        "OCC-R-302-A": (110, "Running"),
+        "OCC-R-401-A": (14, "Walking"),
+        "OCC-R-402-A": (5, "Resting"),
+        "OCC-105-A": (80, "Running"),
+        "OCC-105-B": (120, "Running"),
+        "OCC-105-C": (0, "Resting"),
+        "OCC-202-TEACHER": (60, "Walking"),
+        "OCC-202-STUDENT1": (140, "Running"),
+        "OCC-202-STUDENT2": (5, "Resting")
     }
     cellular_telemetry = []
     for res in resident_registry:
@@ -337,34 +246,49 @@ def generate_all_separate_entities():
     ]
 
     # ==========================================
-    # 8. BLE ACTIVE SIGNALS
+    # 8. BLE ACTIVE SIGNALS (SYNCED!)
     # ==========================================
+    # עדכון המדדים כדי שיתאימו לסטטוס הטלפון
     ble_presets = {
         "OCC-R-101-A": {"rssi": -57.2, "hr": 91, "mov": 0.74, "bat": 83},
-        "OCC-R-102-A": {"rssi": -56.0, "hr": 94, "mov": 0.05, "bat": 78},
+        "OCC-R-102-A": {"rssi": -56.0, "hr": 55, "mov": 0.0, "bat": 78},  # סבא אברהם (דופק נמוך/אפס תנועה)
         "OCC-R-201-A": {"rssi": -67.3, "hr": 100, "mov": 0.55, "bat": 45},
-        "OCC-R-202-A": {"rssi": -60.9, "hr": 107, "mov": 0.55, "bat": 50},
+        "OCC-R-202-A": {"rssi": -60.9, "hr": 135, "mov": 0.05, "bat": 50},
+        # מיכל כהן (טלפון מנותק, דופק פאניקה, אין תנועה)
         "OCC-R-301-A": {"rssi": -66.5, "hr": 114, "mov": 0.38, "bat": 70},
         "OCC-R-302-A": {"rssi": -64.1, "hr": 117, "mov": 0.95, "bat": 58},
         "OCC-R-401-A": {"rssi": -74.4, "hr": 130, "mov": 0.26, "bat": 46},
         "OCC-R-402-A": {"rssi": -67.7, "hr": 124, "mov": 0.10, "bat": 82},
         "OCC-105-A": {"rssi": -52.1, "hr": 110, "mov": 0.80, "bat": 90},
         "OCC-105-B": {"rssi": -48.5, "hr": 125, "mov": 0.90, "bat": 95},
-        "OCC-105-C": {"rssi": -85.0, "hr": 88, "mov": 0.02, "bat": 34},
+        "OCC-105-C": {"rssi": -65.0, "hr": 88, "mov": 0.02, "bat": 34},
         "OCC-202-TEACHER": {"rssi": -60.0, "hr": 99, "mov": 0.40, "bat": 76},
         "OCC-202-STUDENT1": {"rssi": -55.2, "hr": 140, "mov": 0.98, "bat": 89},
         "OCC-202-STUDENT2": {"rssi": -72.1, "hr": 105, "mov": 0.15, "bat": 62}
     }
+
     ble_active_signals = []
     for res in resident_registry:
         occ_id = res["occupant_id"]
+        room_id = res["home_room_id"]
+
+        # שליפת נתוני החדר כדי לבדוק אם זה ממ"ד
+        room_info = rooms_setup.get(room_id)
+        is_mamad = room_info.get("safe", False) if room_info else False
+
         info = ble_presets[occ_id]
+        final_rssi = info["rssi"]
+
+        # אם האדם בממ"ד, החלש את עוצמת האות כדי לדמות קירות בטון
+        if is_mamad:
+            final_rssi = min(final_rssi, -85.0) - round(random.uniform(2.0, 8.0), 1)
+
         ble_active_signals.append({
             "occupant_id": occ_id,
             "associated_building": res["associated_building"],
-            "home_room_id": res["home_room_id"],
+            "home_room_id": room_id,
             "telemetry": {
-                "rssi_dbm": info["rssi"],
+                "rssi_dbm": final_rssi,
                 "battery_pct": info["bat"],
                 "vital_signs": {"heart_rate_bpm": info["hr"], "movement_index": info["mov"]}
             }
@@ -387,7 +311,7 @@ def generate_all_separate_entities():
                                       {"spoke_last_5_mins": False, "known_at_home": None, "going_to_shelter": False})
         emergency_contacts.append({"occupant_id": occ_id, "emergency_contact_response": response_data})
 
-    # איסוף ושמירה לתוך תיקיית היעד mock_data
+    # Save to files
     all_files = {
         "missile_impact.json": missile_impact,
         "building_history.json": building_history,
