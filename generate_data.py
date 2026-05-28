@@ -6,7 +6,6 @@ import random
 def generate_all_separate_entities():
     print("Generating 9 separate comprehensive USAR data files (including Emergency Contacts)...")
 
-    # 1. פגיעת טיל
     missile_impact = {
         "missile_type": "Heavy Artillery Rocket",
         "payload_weight_kg": 150,
@@ -17,7 +16,6 @@ def generate_all_separate_entities():
         "operational_zone_max_radius_meters": 50.0
     }
 
-    # 2. היסטוריית מבנה
     building_history = {
         "building_id": "B-BLDG-99",
         "year_built": 1978,
@@ -26,7 +24,6 @@ def generate_all_separate_entities():
         "structural_integrity_pre_event": 85.0
     }
 
-    # 3. מרשם תושבים
     resident_registry = [
         {"occupant_id": "OCC-R-101-A", "name": "Yossi Levi", "age": 42, "home_room_id": "R-101", "mobility_index": 1.0},
         {"occupant_id": "OCC-R-102-A", "name": "Grandpa Abraham", "age": 81, "home_room_id": "R-102",
@@ -53,7 +50,6 @@ def generate_all_separate_entities():
         "R-402": {"name": "4th Floor - Kitchen", "orig": [12.0, 12.0, 12.0]}
     }
 
-    # 4. BIM
     building_bim = {"rooms": []}
     for r_id, r_info in rooms_setup.items():
         dist = ((r_info["orig"][0] - 12.5) ** 2 + (r_info["orig"][1] - 8.0) ** 2 + (
@@ -74,7 +70,6 @@ def generate_all_separate_entities():
             }
         })
 
-    # 5. מונים
     smart_meters = []
     for room in building_bim["rooms"]:
         smart_meters.append({
@@ -84,7 +79,6 @@ def generate_all_separate_entities():
             "transmitted_last_gasp": True if room["structural_damage_pct"] > 45 else False
         })
 
-    # 6. סלולר
     cellular_telemetry = []
     steps_presets = {
         "OCC-R-101-A": (92, "Running"), "OCC-R-102-A": (2, "Resting"),
@@ -100,7 +94,6 @@ def generate_all_separate_entities():
             "pedometer_5min_pre_event": {"steps": steps_presets[occ_id][0], "state": steps_presets[occ_id][1]}
         })
 
-    # 7. Wi-Fi
     wifi_routers = [
         {"router_id": "WIFI-AP-FL1", "connected_occupants_pre_event": ["OCC-R-101-A", "OCC-R-102-A"]},
         {"router_id": "WIFI-AP-FL2", "connected_occupants_pre_event": ["OCC-R-201-A", "OCC-R-202-A"]},
@@ -108,7 +101,6 @@ def generate_all_separate_entities():
         {"router_id": "WIFI-AP-FL4", "connected_occupants_pre_event": ["OCC-R-401-A", "OCC-R-402-A"]}
     ]
 
-    # 8. BLE
     ble_active_signals = []
     ble_presets = {
         "OCC-R-101-A": {"mac": "94:21", "rssi": -57.2, "hr": 91, "mov": 0.74, "bat": 83},
@@ -132,7 +124,6 @@ def generate_all_separate_entities():
             }
         })
 
-    # --- 9. אנשי קשר חירום (השכבה החדשה!) ---
     emergency_contacts = []
     responses = {
         "OCC-R-101-A": {"spoke_last_5_mins": True, "known_at_home": False, "going_to_shelter": False},
@@ -154,7 +145,7 @@ def generate_all_separate_entities():
         "cellular_telemetry.json": cellular_telemetry,
         "wifi_routers.json": wifi_routers,
         "ble_active_signals.json": ble_active_signals,
-        "emergency_contacts.json": emergency_contacts  # שמירת הקובץ החדש
+        "emergency_contacts.json": emergency_contacts
     }
 
     for filename, content in all_files.items():

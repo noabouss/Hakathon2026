@@ -22,5 +22,5 @@ def get_all_sensors_data():
         "cellular": load_json_data('cellular_telemetry.json'),
         "wifi": load_json_data('wifi_routers.json'),
         "ble": load_json_data('ble_active_signals.json'),
-        "contacts": load_json_data('emergency_contacts.json') # נטען למערכת!
+        "contacts": load_json_data('emergency_contacts.json')
     }

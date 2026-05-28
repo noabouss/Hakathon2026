@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader, TensorDataset
 
 
 class USARSpatialNeuralNet(nn.Module):
-    def __init__(self, input_dim=14):  # שודרג ל-14 פיצ'רים
+    def __init__(self, input_dim=14):
         super(USARSpatialNeuralNet, self).__init__()
         self.network = nn.Sequential(
             nn.Linear(input_dim, 64),
@@ -37,7 +37,6 @@ def generate_historical_training_data(num_samples=600):
         heart_rate = random.randint(60, 150)
         battery_pct = random.randint(0, 100)
 
-        # פיצ'רים חדשים
         immediate_movement_idx = random.uniform(0.0, 1.0)
         contact_spoke = random.choice([0, 1])
         contact_confirmed_home = random.choice([0, 1]) if contact_spoke else 0
@@ -49,7 +48,6 @@ def generate_historical_training_data(num_samples=600):
 
         true_x = 5.0 + (damage_pct / 20.0) + random.uniform(-0.5, 0.5)
 
-        # למידה פיזיקלית: אם הצהיר שרץ לממ"ד או שתנועתו הייתה חדה, המיקום מתעדכן
         if contact_shelter_intent == 1 or immediate_movement_idx > 0.8:
             true_y = 6.0 + random.uniform(-1, 1)
         else:
@@ -76,11 +74,19 @@ def train_model():
     model.train()
     print("\n🏋️ [PyTorch] Training Deep Learning Fusion Network (14 Dimensions)...")
     for epoch in range(50):
+        epoch_loss = 0.0
         for batch_X, batch_y in dataloader:
             optimizer.zero_grad()
-            loss = criterion(model(batch_X), batch_y)
+            predictions = model(batch_X)
+            loss = criterion(predictions, batch_y)
             loss.backward()
             optimizer.step()
+            epoch_loss += loss.item()
+
+        if (epoch + 1) % 10 == 0:
+            print(f"   ↳ Epoch [{epoch + 1}/50] | Loss (Error Rate): {epoch_loss / len(dataloader):.4f}")
+
+    print("✅ [PyTorch] Neural Network Optimization Completed Successfully!\n")
     return model
 
 
@@ -91,31 +97,36 @@ def calculate_u_sar_priority(data):
     trained_net = train_model()
     trained_net.eval()
 
-    residents = data.get("resident_registry", [])
-    bim_rooms = {r["room_id"]: r for r in data.get("bim", {}).get("rooms", [])}
-    meters = {m["room_id"]: m for m in data.get("meters", [])}
-    cellular = {c["occupant_id"]: c for c in data.get("cellular", [])}
-    wifi = data.get("wifi", [])
-    ble_signals = {b["occupant_id"]: b for b in data.get("ble", [])}
-    contacts = {c["occupant_id"]: c.get("emergency_contact_response", {}) for c in data.get("contacts", [])}
+    # שליפה בטוחה למניעת קריסות של NoneType
+    residents = data.get("resident_registry") or []
+    bim_data = data.get("bim") or {}
+    bim_rooms = {r["room_id"]: r for r in bim_data.get("rooms", [])}
+    meters = {m["room_id"]: m for m in (data.get("meters") or [])}
+    cellular = {c["occupant_id"]: c for c in (data.get("cellular") or [])}
+    wifi = data.get("wifi") or []
+    ble_signals = {b["occupant_id"]: b for b in (data.get("ble") or [])}
+    contacts = {c["occupant_id"]: c.get("emergency_contact_response", {}) for c in (data.get("contacts") or [])}
 
     triage_results = []
 
     for res in residents:
-        occ_id = res["occupant_id"]
-        home_room_id = res["home_room_id"]
+        occ_id = res.get("occupant_id")
+        if not occ_id:
+            continue
+
+        home_room_id = res.get("home_room_id")
         room_data = bim_rooms.get(home_room_id)
 
         age = res.get("age", 30)
         mobility = res.get("mobility_index", 1.0)
-        damage_pct = room_data["structural_damage_pct"] if room_data else 50.0
+        damage_pct = room_data.get("structural_damage_pct", 50.0) if room_data else 50.0
         heavy_furniture = 1 if (room_data and room_data.get("heavy_furniture", {}).get("creates_void")) else 0
 
         room_meter = meters.get(home_room_id)
-        mean_kwh = np.mean(room_meter["history_last_2h_kwh"]) if room_meter else 0.5
+        mean_kwh = np.mean(room_meter.get("history_last_2h_kwh", [0.5])) if room_meter else 0.5
 
         cell_data = cellular.get(occ_id)
-        steps = cell_data["pedometer_5min_pre_event"]["steps"] if cell_data else 0
+        steps = cell_data.get("pedometer_5min_pre_event", {}).get("steps", 0) if cell_data else 0
 
         wifi_connected = 0
         for router in wifi:
@@ -167,7 +178,7 @@ def calculate_u_sar_priority(data):
             "estimated_coordinates": {"x": round(float(prediction[0]), 2), "y": round(float(prediction[1]), 2),
                                       "z": round(max(0.2, float(prediction[2])), 2)},
             "location_confidence": confidence_string,
-            "home_room": room_data["room_name"] if room_data else "Unknown"
+            "home_room": room_data.get("room_name", "Unknown") if room_data else "Unknown"
         })
 
     triage_results.sort(key=lambda x: x["priority_score"], reverse=True)
