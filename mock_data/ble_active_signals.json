@@ -121,7 +121,7 @@
         "associated_building": "B-BLDG-105",
         "home_room_id": "R-105-102-MAMAD",
         "telemetry": {
-            "rssi_dbm": -88.7,
+            "rssi_dbm": -89.9,
             "battery_pct": 95,
             "vital_signs": {
                 "heart_rate_bpm": 125,
@@ -134,7 +134,7 @@
         "associated_building": "B-BLDG-105",
         "home_room_id": "R-105-202-MAMAD",
         "telemetry": {
-            "rssi_dbm": -90.1,
+            "rssi_dbm": -90.3,
             "battery_pct": 34,
             "vital_signs": {
                 "heart_rate_bpm": 88,

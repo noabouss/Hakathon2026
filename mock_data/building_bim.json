@@ -13,11 +13,11 @@
                         "z": 3.0
                     },
                     "post_collapse_coordinates": {
-                        "x": 5.17,
+                        "x": 5.6,
                         "y": 5.0,
-                        "z": 2.75
+                        "z": 2.1
                     },
-                    "structural_damage_pct": 10,
+                    "structural_damage_pct": 36,
                     "heavy_furniture": {
                         "type": "Integrated Desk",
                         "creates_void": false
@@ -33,11 +33,11 @@
                         "z": 3.0
                     },
                     "post_collapse_coordinates": {
-                        "x": 5.17,
+                        "x": 6.08,
                         "y": 12.0,
-                        "z": 2.75
+                        "z": 1.38
                     },
-                    "structural_damage_pct": 10,
+                    "structural_damage_pct": 65,
                     "heavy_furniture": {
                         "type": "Heavy Bed",
                         "creates_void": true
@@ -53,11 +53,11 @@
                         "z": 6.0
                     },
                     "post_collapse_coordinates": {
-                        "x": 5.17,
+                        "x": 5.67,
                         "y": 5.0,
-                        "z": 5.45
+                        "z": 3.8
                     },
-                    "structural_damage_pct": 10,
+                    "structural_damage_pct": 40,
                     "heavy_furniture": {
                         "type": "Integrated Desk",
                         "creates_void": false
@@ -73,11 +73,11 @@
                         "z": 6.0
                     },
                     "post_collapse_coordinates": {
-                        "x": 5.18,
+                        "x": 6.58,
                         "y": 12.0,
-                        "z": 5.39
+                        "z": 0.78
                     },
-                    "structural_damage_pct": 11,
+                    "structural_damage_pct": 95,
                     "heavy_furniture": {
                         "type": "Heavy Bed",
                         "creates_void": true
@@ -93,11 +93,11 @@
                         "z": 9.0
                     },
                     "post_collapse_coordinates": {
-                        "x": 12.27,
+                        "x": 12.53,
                         "y": 5.0,
-                        "z": 7.64
+                        "z": 6.28
                     },
-                    "structural_damage_pct": 16,
+                    "structural_damage_pct": 32,
                     "heavy_furniture": {
                         "type": "Integrated Desk",
                         "creates_void": false
@@ -113,11 +113,11 @@
                         "z": 9.0
                     },
                     "post_collapse_coordinates": {
-                        "x": 12.33,
+                        "x": 12.8,
                         "y": 12.0,
-                        "z": 7.3
+                        "z": 4.92
                     },
-                    "structural_damage_pct": 20,
+                    "structural_damage_pct": 48,
                     "heavy_furniture": {
                         "type": "Heavy Bed",
                         "creates_void": true
@@ -133,11 +133,11 @@
                         "z": 12.0
                     },
                     "post_collapse_coordinates": {
-                        "x": 12.32,
+                        "x": 12.52,
                         "y": 5.0,
-                        "z": 9.81
+                        "z": 8.44
                     },
-                    "structural_damage_pct": 19,
+                    "structural_damage_pct": 31,
                     "heavy_furniture": {
                         "type": "Integrated Desk",
                         "creates_void": false
@@ -153,11 +153,11 @@
                         "z": 12.0
                     },
                     "post_collapse_coordinates": {
-                        "x": 12.42,
+                        "x": 12.72,
                         "y": 12.0,
-                        "z": 9.12
+                        "z": 7.05
                     },
-                    "structural_damage_pct": 25,
+                    "structural_damage_pct": 43,
                     "heavy_furniture": {
                         "type": "Integrated Desk",
                         "creates_void": false
@@ -178,11 +178,11 @@
                         "z": 3.0
                     },
                     "post_collapse_coordinates": {
-                        "x": 4.17,
+                        "x": 4.55,
                         "y": 4.0,
-                        "z": 2.75
+                        "z": 2.17
                     },
-                    "structural_damage_pct": 10,
+                    "structural_damage_pct": 33,
                     "heavy_furniture": {
                         "type": "Integrated Desk",
                         "creates_void": false
@@ -198,11 +198,11 @@
                         "z": 3.0
                     },
                     "post_collapse_coordinates": {
-                        "x": 4.08,
+                        "x": 4.18,
                         "y": 10.0,
-                        "z": 2.88
+                        "z": 2.73
                     },
-                    "structural_damage_pct": 5,
+                    "structural_damage_pct": 11,
                     "heavy_furniture": {
                         "type": "Heavy Bed",
                         "creates_void": true
@@ -218,11 +218,11 @@
                         "z": 6.0
                     },
                     "post_collapse_coordinates": {
-                        "x": 4.17,
+                        "x": 4.6,
                         "y": 4.0,
-                        "z": 5.45
+                        "z": 4.02
                     },
-                    "structural_damage_pct": 10,
+                    "structural_damage_pct": 36,
                     "heavy_furniture": {
                         "type": "Integrated Desk",
                         "creates_void": false
@@ -238,11 +238,11 @@
                         "z": 6.0
                     },
                     "post_collapse_coordinates": {
-                        "x": 4.08,
+                        "x": 4.23,
                         "y": 10.0,
-                        "z": 5.72
+                        "z": 5.23
                     },
-                    "structural_damage_pct": 5,
+                    "structural_damage_pct": 14,
                     "heavy_furniture": {
                         "type": "Heavy Bed",
                         "creates_void": true
@@ -263,11 +263,11 @@
                         "z": 4.0
                     },
                     "post_collapse_coordinates": {
-                        "x": 10.2,
+                        "x": 10.68,
                         "y": 8.0,
-                        "z": 3.58
+                        "z": 2.57
                     },
-                    "structural_damage_pct": 12,
+                    "structural_damage_pct": 41,
                     "heavy_furniture": {
                         "type": "Integrated Desk",
                         "creates_void": false
@@ -283,11 +283,11 @@
                         "z": 5.0
                     },
                     "post_collapse_coordinates": {
-                        "x": 18.17,
+                        "x": 18.38,
                         "y": 25.0,
-                        "z": 4.55
+                        "z": 3.96
                     },
-                    "structural_damage_pct": 10,
+                    "structural_damage_pct": 23,
                     "heavy_furniture": {
                         "type": "Integrated Desk",
                         "creates_void": true
@@ -303,11 +303,11 @@
                         "z": 8.0
                     },
                     "post_collapse_coordinates": {
-                        "x": 25.23,
+                        "x": 25.3,
                         "y": 8.0,
-                        "z": 6.95
+                        "z": 6.65
                     },
-                    "structural_damage_pct": 14,
+                    "structural_damage_pct": 18,
                     "heavy_furniture": {
                         "type": "Integrated Desk",
                         "creates_void": false

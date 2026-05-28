@@ -1,13 +1,13 @@
 {
-    "missile_type": "Precision Suicide Drone",
-    "payload_weight_kg": 25,
-    "impact_velocity_mps": 180,
-    "impact_angle_azimuth_deg": 135,
-    "impact_angle_elevation_deg": 15,
+    "missile_type": "Heavy Artillery Rocket",
+    "payload_weight_kg": 150,
+    "impact_velocity_mps": 450,
+    "impact_angle_azimuth_deg": 210,
+    "impact_angle_elevation_deg": 45,
     "epicenter_coordinates": {
-        "x": 17.0,
-        "y": 10.7,
-        "z": 14.6
+        "x": 4.8,
+        "y": 14.3,
+        "z": 7.9
     },
-    "operational_zone_max_radius_meters": 15.0
+    "operational_zone_max_radius_meters": 50.0
 }
