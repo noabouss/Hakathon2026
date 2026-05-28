@@ -1,10 +1,36 @@
-{
-    "building_id": "B-BLDG-99",
-    "year_built": 1978,
-    "construction_standard": "Pre-Structural-Standard-413",
-    "primary_materials": [
-        "Reinforced Concrete Columns",
-        "Unreinforced Hollow Blocks"
-    ],
-    "structural_integrity_pre_event": 85.0
-}
+[
+    {
+        "building_id": "B-BLDG-99",
+        "building_name": "Old Residential Block",
+        "year_built": 1978,
+        "construction_standard": "Pre-Structural-Standard-413",
+        "primary_materials": [
+            "Reinforced Concrete Columns",
+            "Unreinforced Hollow Blocks"
+        ],
+        "structural_integrity_pre_event": 85.0
+    },
+    {
+        "building_id": "B-BLDG-105",
+        "building_name": "Modern Residential Tower",
+        "year_built": 2015,
+        "construction_standard": "Tamam-38-Compliant",
+        "primary_materials": [
+            "High-Strength Concrete",
+            "Steel Shear Walls",
+            "Safe Rooms (MAMAD)"
+        ],
+        "structural_integrity_pre_event": 98.5
+    },
+    {
+        "building_id": "B-BLDG-202",
+        "building_name": "Regional Elementary School",
+        "year_built": 1995,
+        "construction_standard": "Standard-413-Public",
+        "primary_materials": [
+            "Precast Concrete Panels",
+            "Steel Trusses"
+        ],
+        "structural_integrity_pre_event": 90.0
+    }
+]

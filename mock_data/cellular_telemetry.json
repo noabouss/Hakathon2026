@@ -5,9 +5,7 @@
         "pedometer_5min_pre_event": {
             "steps": 92,
             "state": "Running"
-        },
-        "last_known_signal_dbm": -72,
-        "timestamp": "2026-05-27T15:59:55Z"
+        }
     },
     {
         "occupant_id": "OCC-R-102-A",
@@ -15,9 +13,7 @@
         "pedometer_5min_pre_event": {
             "steps": 2,
             "state": "Resting"
-        },
-        "last_known_signal_dbm": -88,
-        "timestamp": "2026-05-27T15:59:55Z"
+        }
     },
     {
         "occupant_id": "OCC-R-201-A",
@@ -25,9 +21,7 @@
         "pedometer_5min_pre_event": {
             "steps": 45,
             "state": "Walking"
-        },
-        "last_known_signal_dbm": -88,
-        "timestamp": "2026-05-27T15:59:55Z"
+        }
     },
     {
         "occupant_id": "OCC-R-202-A",
@@ -35,9 +29,7 @@
         "pedometer_5min_pre_event": {
             "steps": 0,
             "state": "Resting"
-        },
-        "last_known_signal_dbm": -88,
-        "timestamp": "2026-05-27T15:59:55Z"
+        }
     },
     {
         "occupant_id": "OCC-R-301-A",
@@ -45,9 +37,7 @@
         "pedometer_5min_pre_event": {
             "steps": 0,
             "state": "Resting"
-        },
-        "last_known_signal_dbm": -88,
-        "timestamp": "2026-05-27T15:59:55Z"
+        }
     },
     {
         "occupant_id": "OCC-R-302-A",
@@ -55,9 +45,7 @@
         "pedometer_5min_pre_event": {
             "steps": 110,
             "state": "Running"
-        },
-        "last_known_signal_dbm": -72,
-        "timestamp": "2026-05-27T15:59:55Z"
+        }
     },
     {
         "occupant_id": "OCC-R-401-A",
@@ -65,9 +53,7 @@
         "pedometer_5min_pre_event": {
             "steps": 14,
             "state": "Walking"
-        },
-        "last_known_signal_dbm": -88,
-        "timestamp": "2026-05-27T15:59:55Z"
+        }
     },
     {
         "occupant_id": "OCC-R-402-A",
@@ -75,8 +61,54 @@
         "pedometer_5min_pre_event": {
             "steps": 5,
             "state": "Resting"
-        },
-        "last_known_signal_dbm": -88,
-        "timestamp": "2026-05-27T15:59:55Z"
+        }
+    },
+    {
+        "occupant_id": "OCC-105-A",
+        "device_type": "smartphone",
+        "pedometer_5min_pre_event": {
+            "steps": 80,
+            "state": "Running"
+        }
+    },
+    {
+        "occupant_id": "OCC-105-B",
+        "device_type": "smartphone",
+        "pedometer_5min_pre_event": {
+            "steps": 120,
+            "state": "Running"
+        }
+    },
+    {
+        "occupant_id": "OCC-105-C",
+        "device_type": "smartphone",
+        "pedometer_5min_pre_event": {
+            "steps": 4,
+            "state": "Resting"
+        }
+    },
+    {
+        "occupant_id": "OCC-202-TEACHER",
+        "device_type": "smartphone",
+        "pedometer_5min_pre_event": {
+            "steps": 60,
+            "state": "Walking"
+        }
+    },
+    {
+        "occupant_id": "OCC-202-STUDENT1",
+        "device_type": "smartphone",
+        "pedometer_5min_pre_event": {
+            "steps": 140,
+            "state": "Running"
+        }
+    },
+    {
+        "occupant_id": "OCC-202-STUDENT2",
+        "device_type": "smartphone",
+        "pedometer_5min_pre_event": {
+            "steps": 5,
+            "state": "Resting"
+        }
     }
 ]

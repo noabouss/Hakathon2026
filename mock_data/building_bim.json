@@ -1,156 +1,319 @@
 {
-    "rooms": [
+    "buildings": [
         {
-            "room_id": "R-101",
-            "room_name": "1st Floor - Living Room",
-            "original_coordinates": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": 3.0
-            },
-            "post_collapse_coordinates": {
-                "x": 5.52,
-                "y": 5.0,
-                "z": 2.35
-            },
-            "structural_damage_pct": 26,
-            "heavy_furniture": {
-                "type": "Dining Table",
-                "creates_void": false
-            }
+            "building_id": "B-BLDG-99",
+            "rooms": [
+                {
+                    "room_id": "R-99-101",
+                    "room_name": "1st Floor - Living Room",
+                    "is_safe_room": false,
+                    "original_coordinates": {
+                        "x": 5.0,
+                        "y": 5.0,
+                        "z": 3.0
+                    },
+                    "post_collapse_coordinates": {
+                        "x": 5.43,
+                        "y": 5.0,
+                        "z": 2.35
+                    },
+                    "structural_damage_pct": 26,
+                    "heavy_furniture": {
+                        "type": "Integrated Desk",
+                        "creates_void": false
+                    }
+                },
+                {
+                    "room_id": "R-99-102",
+                    "room_name": "1st Floor - Bedroom",
+                    "is_safe_room": false,
+                    "original_coordinates": {
+                        "x": 5.0,
+                        "y": 12.0,
+                        "z": 3.0
+                    },
+                    "post_collapse_coordinates": {
+                        "x": 5.43,
+                        "y": 12.0,
+                        "z": 2.35
+                    },
+                    "structural_damage_pct": 26,
+                    "heavy_furniture": {
+                        "type": "Heavy Bed",
+                        "creates_void": true
+                    }
+                },
+                {
+                    "room_id": "R-99-201",
+                    "room_name": "2nd Floor - Living Room",
+                    "is_safe_room": false,
+                    "original_coordinates": {
+                        "x": 5.0,
+                        "y": 5.0,
+                        "z": 6.0
+                    },
+                    "post_collapse_coordinates": {
+                        "x": 5.52,
+                        "y": 5.0,
+                        "z": 4.29
+                    },
+                    "structural_damage_pct": 31,
+                    "heavy_furniture": {
+                        "type": "Integrated Desk",
+                        "creates_void": false
+                    }
+                },
+                {
+                    "room_id": "R-99-202",
+                    "room_name": "2nd Floor - Bedroom",
+                    "is_safe_room": false,
+                    "original_coordinates": {
+                        "x": 5.0,
+                        "y": 12.0,
+                        "z": 6.0
+                    },
+                    "post_collapse_coordinates": {
+                        "x": 5.5,
+                        "y": 12.0,
+                        "z": 4.35
+                    },
+                    "structural_damage_pct": 30,
+                    "heavy_furniture": {
+                        "type": "Heavy Bed",
+                        "creates_void": true
+                    }
+                },
+                {
+                    "room_id": "R-99-301",
+                    "room_name": "3rd Floor - Living Room",
+                    "is_safe_room": false,
+                    "original_coordinates": {
+                        "x": 12.0,
+                        "y": 5.0,
+                        "z": 9.0
+                    },
+                    "post_collapse_coordinates": {
+                        "x": 13.1,
+                        "y": 5.0,
+                        "z": 3.39
+                    },
+                    "structural_damage_pct": 66,
+                    "heavy_furniture": {
+                        "type": "Integrated Desk",
+                        "creates_void": false
+                    }
+                },
+                {
+                    "room_id": "R-99-302",
+                    "room_name": "3rd Floor - Bedroom",
+                    "is_safe_room": false,
+                    "original_coordinates": {
+                        "x": 12.0,
+                        "y": 12.0,
+                        "z": 9.0
+                    },
+                    "post_collapse_coordinates": {
+                        "x": 12.97,
+                        "y": 12.0,
+                        "z": 4.07
+                    },
+                    "structural_damage_pct": 58,
+                    "heavy_furniture": {
+                        "type": "Heavy Bed",
+                        "creates_void": true
+                    }
+                },
+                {
+                    "room_id": "R-99-401",
+                    "room_name": "4th Floor - Main Room",
+                    "is_safe_room": false,
+                    "original_coordinates": {
+                        "x": 12.0,
+                        "y": 5.0,
+                        "z": 12.0
+                    },
+                    "post_collapse_coordinates": {
+                        "x": 13.43,
+                        "y": 5.0,
+                        "z": 2.11
+                    },
+                    "structural_damage_pct": 86,
+                    "heavy_furniture": {
+                        "type": "Integrated Desk",
+                        "creates_void": false
+                    }
+                },
+                {
+                    "room_id": "R-99-402",
+                    "room_name": "4th Floor - Kitchen",
+                    "is_safe_room": false,
+                    "original_coordinates": {
+                        "x": 12.0,
+                        "y": 12.0,
+                        "z": 12.0
+                    },
+                    "post_collapse_coordinates": {
+                        "x": 13.15,
+                        "y": 12.0,
+                        "z": 4.07
+                    },
+                    "structural_damage_pct": 69,
+                    "heavy_furniture": {
+                        "type": "Integrated Desk",
+                        "creates_void": false
+                    }
+                }
+            ]
         },
         {
-            "room_id": "R-102",
-            "room_name": "1st Floor - Bedroom",
-            "original_coordinates": {
-                "x": 5.0,
-                "y": 12.0,
-                "z": 3.0
-            },
-            "post_collapse_coordinates": {
-                "x": 5.52,
-                "y": 12.0,
-                "z": 2.35
-            },
-            "structural_damage_pct": 26,
-            "heavy_furniture": {
-                "type": "Heavy Bed",
-                "creates_void": true
-            }
+            "building_id": "B-BLDG-105",
+            "rooms": [
+                {
+                    "room_id": "R-105-101",
+                    "room_name": "Apt 1 - Salon",
+                    "is_safe_room": false,
+                    "original_coordinates": {
+                        "x": 4.0,
+                        "y": 4.0,
+                        "z": 3.0
+                    },
+                    "post_collapse_coordinates": {
+                        "x": 4.4,
+                        "y": 4.0,
+                        "z": 2.4
+                    },
+                    "structural_damage_pct": 24,
+                    "heavy_furniture": {
+                        "type": "Integrated Desk",
+                        "creates_void": false
+                    }
+                },
+                {
+                    "room_id": "R-105-102-MAMAD",
+                    "room_name": "Apt 1 - Safe Room",
+                    "is_safe_room": true,
+                    "original_coordinates": {
+                        "x": 4.0,
+                        "y": 10.0,
+                        "z": 3.0
+                    },
+                    "post_collapse_coordinates": {
+                        "x": 4.08,
+                        "y": 10.0,
+                        "z": 2.88
+                    },
+                    "structural_damage_pct": 5,
+                    "heavy_furniture": {
+                        "type": "Heavy Bed",
+                        "creates_void": true
+                    }
+                },
+                {
+                    "room_id": "R-105-201",
+                    "room_name": "Apt 2 - Salon",
+                    "is_safe_room": false,
+                    "original_coordinates": {
+                        "x": 4.0,
+                        "y": 4.0,
+                        "z": 6.0
+                    },
+                    "post_collapse_coordinates": {
+                        "x": 4.47,
+                        "y": 4.0,
+                        "z": 4.46
+                    },
+                    "structural_damage_pct": 28,
+                    "heavy_furniture": {
+                        "type": "Integrated Desk",
+                        "creates_void": false
+                    }
+                },
+                {
+                    "room_id": "R-105-202-MAMAD",
+                    "room_name": "Apt 2 - Safe Room",
+                    "is_safe_room": true,
+                    "original_coordinates": {
+                        "x": 4.0,
+                        "y": 10.0,
+                        "z": 6.0
+                    },
+                    "post_collapse_coordinates": {
+                        "x": 4.1,
+                        "y": 10.0,
+                        "z": 5.67
+                    },
+                    "structural_damage_pct": 6,
+                    "heavy_furniture": {
+                        "type": "Heavy Bed",
+                        "creates_void": true
+                    }
+                }
+            ]
         },
         {
-            "room_id": "R-201",
-            "room_name": "2nd Floor - Living Room",
-            "original_coordinates": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": 6.0
-            },
-            "post_collapse_coordinates": {
-                "x": 5.62,
-                "y": 5.0,
-                "z": 4.29
-            },
-            "structural_damage_pct": 31,
-            "heavy_furniture": {
-                "type": "Dining Table",
-                "creates_void": false
-            }
-        },
-        {
-            "room_id": "R-202",
-            "room_name": "2nd Floor - Bedroom",
-            "original_coordinates": {
-                "x": 5.0,
-                "y": 12.0,
-                "z": 6.0
-            },
-            "post_collapse_coordinates": {
-                "x": 5.6,
-                "y": 12.0,
-                "z": 4.35
-            },
-            "structural_damage_pct": 30,
-            "heavy_furniture": {
-                "type": "Heavy Bed",
-                "creates_void": true
-            }
-        },
-        {
-            "room_id": "R-301",
-            "room_name": "3rd Floor - Living Room",
-            "original_coordinates": {
-                "x": 12.0,
-                "y": 5.0,
-                "z": 9.0
-            },
-            "post_collapse_coordinates": {
-                "x": 13.32,
-                "y": 5.0,
-                "z": 3.39
-            },
-            "structural_damage_pct": 66,
-            "heavy_furniture": {
-                "type": "Dining Table",
-                "creates_void": false
-            }
-        },
-        {
-            "room_id": "R-302",
-            "room_name": "3rd Floor - Bedroom",
-            "original_coordinates": {
-                "x": 12.0,
-                "y": 12.0,
-                "z": 9.0
-            },
-            "post_collapse_coordinates": {
-                "x": 13.16,
-                "y": 12.0,
-                "z": 4.07
-            },
-            "structural_damage_pct": 58,
-            "heavy_furniture": {
-                "type": "Heavy Bed",
-                "creates_void": true
-            }
-        },
-        {
-            "room_id": "R-401",
-            "room_name": "4th Floor - Main Room",
-            "original_coordinates": {
-                "x": 12.0,
-                "y": 5.0,
-                "z": 12.0
-            },
-            "post_collapse_coordinates": {
-                "x": 13.72,
-                "y": 5.0,
-                "z": 2.11
-            },
-            "structural_damage_pct": 86,
-            "heavy_furniture": {
-                "type": "Dining Table",
-                "creates_void": true
-            }
-        },
-        {
-            "room_id": "R-402",
-            "room_name": "4th Floor - Kitchen",
-            "original_coordinates": {
-                "x": 12.0,
-                "y": 12.0,
-                "z": 12.0
-            },
-            "post_collapse_coordinates": {
-                "x": 13.38,
-                "y": 12.0,
-                "z": 4.07
-            },
-            "structural_damage_pct": 69,
-            "heavy_furniture": {
-                "type": "Dining Table",
-                "creates_void": false
-            }
+            "building_id": "B-BLDG-202",
+            "rooms": [
+                {
+                    "room_id": "R-202-G1",
+                    "room_name": "Ground Floor - Class 1A",
+                    "is_safe_room": false,
+                    "original_coordinates": {
+                        "x": 10.0,
+                        "y": 8.0,
+                        "z": 4.0
+                    },
+                    "post_collapse_coordinates": {
+                        "x": 10.62,
+                        "y": 8.0,
+                        "z": 2.71
+                    },
+                    "structural_damage_pct": 37,
+                    "heavy_furniture": {
+                        "type": "Integrated Desk",
+                        "creates_void": false
+                    }
+                },
+                {
+                    "room_id": "R-202-AUD",
+                    "room_name": "Auditorium / Sport Hall",
+                    "is_safe_room": false,
+                    "original_coordinates": {
+                        "x": 18.0,
+                        "y": 25.0,
+                        "z": 5.0
+                    },
+                    "post_collapse_coordinates": {
+                        "x": 18.28,
+                        "y": 25.0,
+                        "z": 4.24
+                    },
+                    "structural_damage_pct": 17,
+                    "heavy_furniture": {
+                        "type": "Integrated Desk",
+                        "creates_void": true
+                    }
+                },
+                {
+                    "room_id": "R-202-F2",
+                    "room_name": "1st Floor - Teachers Lounge",
+                    "is_safe_room": false,
+                    "original_coordinates": {
+                        "x": 25.0,
+                        "y": 8.0,
+                        "z": 8.0
+                    },
+                    "post_collapse_coordinates": {
+                        "x": 25.4,
+                        "y": 8.0,
+                        "z": 6.2
+                    },
+                    "structural_damage_pct": 24,
+                    "heavy_furniture": {
+                        "type": "Integrated Desk",
+                        "creates_void": false
+                    }
+                }
+            ]
         }
     ]
 }
