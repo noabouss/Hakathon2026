@@ -119,6 +119,54 @@ def generate_all_separate_entities():
                      "safe": False}
     }
 
+    # ✨ שינוי 1: מאגר סוגי איומים ורקטות עם מכפיל נזק פיזיקלי משלהם
+    missile_presets = [
+        {
+            "missile_type": "Heavy Artillery Rocket",
+            "payload_weight_kg": 150,
+            "impact_velocity_mps": 450,
+            "impact_angle_azimuth_deg": 210,
+            "impact_angle_elevation_deg": 45,
+            "operational_zone_max_radius_meters": 50.0,
+            "damage_multiplier": 1.2
+        },
+        {
+            "missile_type": "Precision Suicide Drone",
+            "payload_weight_kg": 25,
+            "impact_velocity_mps": 180,
+            "impact_angle_azimuth_deg": 135,
+            "impact_angle_elevation_deg": 15,
+            "operational_zone_max_radius_meters": 15.0,
+            "damage_multiplier": 0.5
+        },
+        {
+            "missile_type": "Standard Mortar Shell",
+            "payload_weight_kg": 45,
+            "impact_velocity_mps": 300,
+            "impact_angle_azimuth_deg": 90,
+            "impact_angle_elevation_deg": 70,
+            "operational_zone_max_radius_meters": 25.0,
+            "damage_multiplier": 0.8
+        }
+    ]
+
+    # ✨ שינוי 2: הגרלת סוג רקטה אקראי ונקודת פגיעה (Epicenter) דינמית בכל הרצה
+    chosen_missile = random.choice(missile_presets)
+    epi_x = round(random.uniform(2.0, 25.0), 1)
+    epi_y = round(random.uniform(2.0, 25.0), 1)
+    epi_z = round(random.uniform(3.0, 15.0), 1)
+
+    # בניית אובייקט הפגיעה הסופי שיוצג ויישמר
+    missile_impact = {
+        "missile_type": chosen_missile["missile_type"],
+        "payload_weight_kg": chosen_missile["payload_weight_kg"],
+        "impact_velocity_mps": chosen_missile["impact_velocity_mps"],
+        "impact_angle_azimuth_deg": chosen_missile["impact_angle_azimuth_deg"],
+        "impact_angle_elevation_deg": chosen_missile["impact_angle_elevation_deg"],
+        "epicenter_coordinates": {"x": epi_x, "y": epi_y, "z": epi_z},
+        "operational_zone_max_radius_meters": chosen_missile["operational_zone_max_radius_meters"]
+    }
+
     # ==========================================
     # 3. BUILDING BIM
     # ==========================================
@@ -129,9 +177,14 @@ def generate_all_separate_entities():
         if b_id not in by_bldg:
             by_bldg[b_id] = []
 
-        dist = ((r_info["orig"][0] - 12.5) ** 2 + (r_info["orig"][1] - 8.0) ** 2 + (
-                    r_info["orig"][2] - 12.0) ** 2) ** 0.5
-        damage_pct = max(10, min(95, int((1 / (dist + 1)) * 350)))
+        # ✨ שינוי 3: חישוב המרחק והנזק מבוסס כעת על האפיסנטר המוגרל ומכפיל הנזק של הרקטה שנבחרה
+        dist = ((r_info["orig"][0] - epi_x) ** 2 +
+                (r_info["orig"][1] - epi_y) ** 2 +
+                (r_info["orig"][2] - epi_z) ** 2) ** 0.5
+
+        # חישוב אחוז הנזק מושפע ישירות מה-damage_multiplier של האיום הספציפי
+        base_damage = (1 / (dist + 1)) * 350
+        damage_pct = max(10, min(95, int(base_damage * chosen_missile["damage_multiplier"])))
 
         if r_info["safe"]:
             damage_pct = max(5, int(damage_pct * 0.2))
@@ -161,19 +214,6 @@ def generate_all_separate_entities():
             "building_id": b_id,
             "rooms": rooms_list
         })
-
-    # ==========================================
-    # 4. MISSILE IMPACT
-    # ==========================================
-    missile_impact = {
-        "missile_type": "Heavy Artillery Rocket",
-        "payload_weight_kg": 150,
-        "impact_velocity_mps": 450,
-        "impact_angle_azimuth_deg": 210,
-        "impact_angle_elevation_deg": 45,
-        "epicenter_coordinates": {"x": 12.5, "y": 8.0, "z": 12.0},
-        "operational_zone_max_radius_meters": 50.0
-    }
 
     # ==========================================
     # 5. SMART METERS HISTORICAL (SYNCED)
@@ -288,7 +328,7 @@ def generate_all_separate_entities():
             }
         })
 
-    # שמירת שמונת הקבצים המסונכרנים
+    # שמירת שמונת הקבצים המסונכרנים עם האיום המשתנה
     all_files = {
         "missile_impact.json": missile_impact,
         "building_history.json": building_history,
@@ -305,6 +345,7 @@ def generate_all_separate_entities():
         with open(file_path, 'w', encoding='utf-8') as f:
             json.dump(content, f, indent=4, ensure_ascii=False)
 
+    print(f"[SUCCESS] Scenario simulation complete using target: {chosen_missile['missile_type']}")
     print(f"[SUCCESS] All 8 synchronized JSON files written into '{target_folder}/' successfully.")
 
 
