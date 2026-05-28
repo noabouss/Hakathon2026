@@ -20,8 +20,8 @@
             "rssi_dbm": -56.0,
             "battery_pct": 78,
             "vital_signs": {
-                "heart_rate_bpm": 94,
-                "movement_index": 0.05
+                "heart_rate_bpm": 55,
+                "movement_index": 0.0
             }
         }
     },
@@ -46,8 +46,8 @@
             "rssi_dbm": -60.9,
             "battery_pct": 50,
             "vital_signs": {
-                "heart_rate_bpm": 107,
-                "movement_index": 0.55
+                "heart_rate_bpm": 135,
+                "movement_index": 0.05
             }
         }
     },
@@ -121,7 +121,7 @@
         "associated_building": "B-BLDG-105",
         "home_room_id": "R-105-102-MAMAD",
         "telemetry": {
-            "rssi_dbm": -48.5,
+            "rssi_dbm": -91.5,
             "battery_pct": 95,
             "vital_signs": {
                 "heart_rate_bpm": 125,
@@ -134,7 +134,7 @@
         "associated_building": "B-BLDG-105",
         "home_room_id": "R-105-202-MAMAD",
         "telemetry": {
-            "rssi_dbm": -85.0,
+            "rssi_dbm": -89.4,
             "battery_pct": 34,
             "vital_signs": {
                 "heart_rate_bpm": 88,

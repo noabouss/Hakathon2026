@@ -29,7 +29,7 @@ def generate_all_separate_entities():
     ]
 
     # ==========================================
-    # 2. RESIDENT REGISTRY
+    # 2. RESIDENT REGISTRY (כולל פרטי התקשרות ישירים בלבד)
     # ==========================================
     resident_registry = [
         # Building 99
@@ -125,7 +125,7 @@ def generate_all_separate_entities():
     building_bim = {"buildings": []}
     by_bldg = {}
     for r_id, r_info in rooms_setup.items():
-        b_id = r_info["b_id"]
+        b_id = str(r_info["b_id"])
         if b_id not in by_bldg:
             by_bldg[b_id] = []
 
@@ -176,19 +176,18 @@ def generate_all_separate_entities():
     }
 
     # ==========================================
-    # 5. SMART METERS HISTORICAL (SYNCED!)
+    # 5. SMART METERS HISTORICAL (SYNCED)
     # ==========================================
     smart_meters = []
     for b_data in building_bim["buildings"]:
         for room in b_data["rooms"]:
             room_id = room['room_id']
-            # מניית אנשים בחדר כדי לקבוע צריכת חשמל הגיונית
             people_in_room = len([r for r in resident_registry if r["home_room_id"] == room_id])
 
             if people_in_room > 0:
-                base_load = round(random.uniform(0.6, 1.5), 2)  # חדר פעיל
+                base_load = round(random.uniform(0.6, 1.5), 2)
             else:
-                base_load = round(random.uniform(0.02, 0.08), 2)  # חדר ריק (רקע)
+                base_load = round(random.uniform(0.02, 0.08), 2)
 
             smart_meters.append({
                 "meter_id": f"METER-{room_id}",
@@ -199,14 +198,13 @@ def generate_all_separate_entities():
             })
 
     # ==========================================
-    # 6. CELLULAR TELEMETRY (SYNCED!)
+    # 6. CELLULAR TELEMETRY (SYNCED)
     # ==========================================
-    # הנתונים עודכנו כדי להתאים לסטטוס הטלפון (סבא אברהם לא זז, מיכל כהן לכודה ולא זזה)
     steps_presets = {
         "OCC-R-101-A": (92, "Running"),
-        "OCC-R-102-A": (0, "Resting"),  # סבא אברהם לא עונה (אין צעדים)
+        "OCC-R-102-A": (0, "Resting"),
         "OCC-R-201-A": (45, "Walking"),
-        "OCC-R-202-A": (0, "Trapped"),  # מיכל כהן (טלפון נותק)
+        "OCC-R-202-A": (0, "Trapped"),
         "OCC-R-301-A": (0, "Resting"),
         "OCC-R-302-A": (110, "Running"),
         "OCC-R-401-A": (14, "Walking"),
@@ -246,15 +244,13 @@ def generate_all_separate_entities():
     ]
 
     # ==========================================
-    # 8. BLE ACTIVE SIGNALS (SYNCED!)
+    # 8. BLE ACTIVE SIGNALS (SYNCED)
     # ==========================================
-    # עדכון המדדים כדי שיתאימו לסטטוס הטלפון
     ble_presets = {
         "OCC-R-101-A": {"rssi": -57.2, "hr": 91, "mov": 0.74, "bat": 83},
-        "OCC-R-102-A": {"rssi": -56.0, "hr": 55, "mov": 0.0, "bat": 78},  # סבא אברהם (דופק נמוך/אפס תנועה)
+        "OCC-R-102-A": {"rssi": -56.0, "hr": 55, "mov": 0.0, "bat": 78},
         "OCC-R-201-A": {"rssi": -67.3, "hr": 100, "mov": 0.55, "bat": 45},
         "OCC-R-202-A": {"rssi": -60.9, "hr": 135, "mov": 0.05, "bat": 50},
-        # מיכל כהן (טלפון מנותק, דופק פאניקה, אין תנועה)
         "OCC-R-301-A": {"rssi": -66.5, "hr": 114, "mov": 0.38, "bat": 70},
         "OCC-R-302-A": {"rssi": -64.1, "hr": 117, "mov": 0.95, "bat": 58},
         "OCC-R-401-A": {"rssi": -74.4, "hr": 130, "mov": 0.26, "bat": 46},
@@ -272,14 +268,12 @@ def generate_all_separate_entities():
         occ_id = res["occupant_id"]
         room_id = res["home_room_id"]
 
-        # שליפת נתוני החדר כדי לבדוק אם זה ממ"ד
         room_info = rooms_setup.get(room_id)
         is_mamad = room_info.get("safe", False) if room_info else False
 
         info = ble_presets[occ_id]
         final_rssi = info["rssi"]
 
-        # אם האדם בממ"ד, החלש את עוצמת האות כדי לדמות קירות בטון
         if is_mamad:
             final_rssi = min(final_rssi, -85.0) - round(random.uniform(2.0, 8.0), 1)
 
@@ -294,24 +288,7 @@ def generate_all_separate_entities():
             }
         })
 
-    # ==========================================
-    # 9. EMERGENCY CONTACTS
-    # ==========================================
-    responses = {
-        "OCC-R-101-A": {"spoke_last_5_mins": True, "known_at_home": False, "going_to_shelter": False},
-        "OCC-R-401-A": {"spoke_last_5_mins": True, "known_at_home": True, "going_to_shelter": False},
-        "OCC-R-302-A": {"spoke_last_5_mins": True, "known_at_home": True, "going_to_shelter": True},
-        "OCC-105-B": {"spoke_last_5_mins": True, "known_at_home": True, "going_to_shelter": True},
-        "OCC-202-STUDENT1": {"spoke_last_5_mins": True, "known_at_home": True, "going_to_shelter": True}
-    }
-    emergency_contacts = []
-    for res in resident_registry:
-        occ_id = res["occupant_id"]
-        response_data = responses.get(occ_id,
-                                      {"spoke_last_5_mins": False, "known_at_home": None, "going_to_shelter": False})
-        emergency_contacts.append({"occupant_id": occ_id, "emergency_contact_response": response_data})
-
-    # Save to files
+    # שמירת שמונת הקבצים המסונכרנים
     all_files = {
         "missile_impact.json": missile_impact,
         "building_history.json": building_history,
@@ -320,8 +297,7 @@ def generate_all_separate_entities():
         "smart_meters_historical.json": smart_meters,
         "cellular_telemetry.json": cellular_telemetry,
         "wifi_routers.json": wifi_routers,
-        "ble_active_signals.json": ble_active_signals,
-        "emergency_contacts.json": emergency_contacts
+        "ble_active_signals.json": ble_active_signals
     }
 
     for filename, content in all_files.items():
@@ -329,7 +305,7 @@ def generate_all_separate_entities():
         with open(file_path, 'w', encoding='utf-8') as f:
             json.dump(content, f, indent=4, ensure_ascii=False)
 
-    print(f"[SUCCESS] All 9 expanded multi-building JSON files written into '{target_folder}/' successfully.")
+    print(f"[SUCCESS] All 8 synchronized JSON files written into '{target_folder}/' successfully.")
 
 
 if __name__ == "__main__":

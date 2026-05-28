@@ -11,7 +11,7 @@
         "occupant_id": "OCC-R-102-A",
         "device_type": "smartphone",
         "pedometer_5min_pre_event": {
-            "steps": 2,
+            "steps": 0,
             "state": "Resting"
         }
     },
@@ -28,7 +28,7 @@
         "device_type": "smartphone",
         "pedometer_5min_pre_event": {
             "steps": 0,
-            "state": "Resting"
+            "state": "Trapped"
         }
     },
     {
@@ -83,7 +83,7 @@
         "occupant_id": "OCC-105-C",
         "device_type": "smartphone",
         "pedometer_5min_pre_event": {
-            "steps": 4,
+            "steps": 0,
             "state": "Resting"
         }
     },
