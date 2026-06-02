@@ -1,0 +1,384 @@
+{
+    "building_model": {
+        "model_type": "grid_residential_block_v1",
+        "floor_height_m": 3.0,
+        "room_height_m": 2.8,
+        "footprint": {
+            "x_min": 0.0,
+            "x_max": 20.0,
+            "y_min": 0.0,
+            "y_max": 20.0,
+            "z_min": 0.0,
+            "z_max": 15.0
+        },
+        "floor_levels_z": [
+            3.0,
+            6.0,
+            9.0,
+            12.0
+        ],
+        "compatibility_note": "original_coordinates and post_collapse_coordinates remain the fusion-engine anchors."
+    },
+    "rooms": [
+        {
+            "room_id": "R-101",
+            "room_name": "1st Floor - North Apartment Living Room",
+            "floor": 1,
+            "grid_cell": {
+                "column": 1,
+                "row": 1
+            },
+            "dimensions": {
+                "width": 8.0,
+                "depth": 7.2,
+                "height": 2.8
+            },
+            "bounds": {
+                "x_min": 1.0,
+                "x_max": 9.0,
+                "y_min": 1.0,
+                "y_max": 8.2,
+                "z_min": 1.6,
+                "z_max": 4.4
+            },
+            "post_collapse_bounds": {
+                "x_min": 1.0,
+                "x_max": 9.0,
+                "y_min": 1.0,
+                "y_max": 8.2,
+                "z_min": 1.48,
+                "z_max": 4.28
+            },
+            "original_coordinates": {
+                "x": 5.0,
+                "y": 4.6,
+                "z": 3.0
+            },
+            "post_collapse_coordinates": {
+                "x": 5.5,
+                "y": 4.71,
+                "z": 2.88
+            },
+            "structural_damage_pct": 96,
+            "heavy_furniture": {
+                "type": "Dining Table",
+                "creates_void": false
+            }
+        },
+        {
+            "room_id": "R-102",
+            "room_name": "1st Floor - South Apartment Bedroom",
+            "floor": 1,
+            "grid_cell": {
+                "column": 1,
+                "row": 2
+            },
+            "dimensions": {
+                "width": 8.0,
+                "depth": 7.2,
+                "height": 2.8
+            },
+            "bounds": {
+                "x_min": 1.0,
+                "x_max": 9.0,
+                "y_min": 11.8,
+                "y_max": 19.0,
+                "z_min": 1.6,
+                "z_max": 4.4
+            },
+            "post_collapse_bounds": {
+                "x_min": 1.0,
+                "x_max": 9.0,
+                "y_min": 11.8,
+                "y_max": 19.0,
+                "z_min": 0.66,
+                "z_max": 3.46
+            },
+            "original_coordinates": {
+                "x": 5.0,
+                "y": 15.4,
+                "z": 3.0
+            },
+            "post_collapse_coordinates": {
+                "x": 5.33,
+                "y": 15.38,
+                "z": 2.06
+            },
+            "structural_damage_pct": 97,
+            "heavy_furniture": {
+                "type": "Heavy Bed",
+                "creates_void": true
+            }
+        },
+        {
+            "room_id": "R-201",
+            "room_name": "2nd Floor - North Apartment Living Room",
+            "floor": 2,
+            "grid_cell": {
+                "column": 1,
+                "row": 1
+            },
+            "dimensions": {
+                "width": 8.0,
+                "depth": 7.2,
+                "height": 2.8
+            },
+            "bounds": {
+                "x_min": 1.0,
+                "x_max": 9.0,
+                "y_min": 1.0,
+                "y_max": 8.2,
+                "z_min": 4.6,
+                "z_max": 7.4
+            },
+            "post_collapse_bounds": {
+                "x_min": 1.0,
+                "x_max": 9.0,
+                "y_min": 1.0,
+                "y_max": 8.2,
+                "z_min": 4.44,
+                "z_max": 7.24
+            },
+            "original_coordinates": {
+                "x": 5.0,
+                "y": 4.6,
+                "z": 6.0
+            },
+            "post_collapse_coordinates": {
+                "x": 5.81,
+                "y": 4.74,
+                "z": 5.84
+            },
+            "structural_damage_pct": 97,
+            "heavy_furniture": {
+                "type": "Dining Table",
+                "creates_void": false
+            }
+        },
+        {
+            "room_id": "R-202",
+            "room_name": "2nd Floor - South Apartment Bedroom",
+            "floor": 2,
+            "grid_cell": {
+                "column": 1,
+                "row": 2
+            },
+            "dimensions": {
+                "width": 8.0,
+                "depth": 7.2,
+                "height": 2.8
+            },
+            "bounds": {
+                "x_min": 1.0,
+                "x_max": 9.0,
+                "y_min": 11.8,
+                "y_max": 19.0,
+                "z_min": 4.6,
+                "z_max": 7.4
+            },
+            "post_collapse_bounds": {
+                "x_min": 1.0,
+                "x_max": 9.0,
+                "y_min": 11.8,
+                "y_max": 19.0,
+                "z_min": 4.1,
+                "z_max": 6.9
+            },
+            "original_coordinates": {
+                "x": 5.0,
+                "y": 15.4,
+                "z": 6.0
+            },
+            "post_collapse_coordinates": {
+                "x": 5.79,
+                "y": 15.42,
+                "z": 5.5
+            },
+            "structural_damage_pct": 83,
+            "heavy_furniture": {
+                "type": "Heavy Bed",
+                "creates_void": true
+            }
+        },
+        {
+            "room_id": "R-301",
+            "room_name": "3rd Floor - North Apartment Living Room",
+            "floor": 3,
+            "grid_cell": {
+                "column": 2,
+                "row": 1
+            },
+            "dimensions": {
+                "width": 8.0,
+                "depth": 7.2,
+                "height": 2.8
+            },
+            "bounds": {
+                "x_min": 11.0,
+                "x_max": 19.0,
+                "y_min": 1.0,
+                "y_max": 8.2,
+                "z_min": 7.6,
+                "z_max": 10.4
+            },
+            "post_collapse_bounds": {
+                "x_min": 11.0,
+                "x_max": 19.0,
+                "y_min": 1.0,
+                "y_max": 8.2,
+                "z_min": 7.23,
+                "z_max": 10.03
+            },
+            "original_coordinates": {
+                "x": 15.0,
+                "y": 4.6,
+                "z": 9.0
+            },
+            "post_collapse_coordinates": {
+                "x": 15.33,
+                "y": 5.04,
+                "z": 8.63
+            },
+            "structural_damage_pct": 97,
+            "heavy_furniture": {
+                "type": "Dining Table",
+                "creates_void": false
+            }
+        },
+        {
+            "room_id": "R-302",
+            "room_name": "3rd Floor - South Apartment Bedroom",
+            "floor": 3,
+            "grid_cell": {
+                "column": 2,
+                "row": 2
+            },
+            "dimensions": {
+                "width": 8.0,
+                "depth": 7.2,
+                "height": 2.8
+            },
+            "bounds": {
+                "x_min": 11.0,
+                "x_max": 19.0,
+                "y_min": 11.8,
+                "y_max": 19.0,
+                "z_min": 7.6,
+                "z_max": 10.4
+            },
+            "post_collapse_bounds": {
+                "x_min": 11.0,
+                "x_max": 19.0,
+                "y_min": 11.8,
+                "y_max": 19.0,
+                "z_min": 7.37,
+                "z_max": 10.17
+            },
+            "original_coordinates": {
+                "x": 15.0,
+                "y": 15.4,
+                "z": 9.0
+            },
+            "post_collapse_coordinates": {
+                "x": 15.34,
+                "y": 15.52,
+                "z": 8.77
+            },
+            "structural_damage_pct": 97,
+            "heavy_furniture": {
+                "type": "Heavy Bed",
+                "creates_void": true
+            }
+        },
+        {
+            "room_id": "R-401",
+            "room_name": "4th Floor - North Apartment Main Room",
+            "floor": 4,
+            "grid_cell": {
+                "column": 2,
+                "row": 1
+            },
+            "dimensions": {
+                "width": 8.0,
+                "depth": 7.2,
+                "height": 2.8
+            },
+            "bounds": {
+                "x_min": 11.0,
+                "x_max": 19.0,
+                "y_min": 1.0,
+                "y_max": 8.2,
+                "z_min": 10.6,
+                "z_max": 13.4
+            },
+            "post_collapse_bounds": {
+                "x_min": 11.0,
+                "x_max": 19.0,
+                "y_min": 1.0,
+                "y_max": 8.2,
+                "z_min": 10.14,
+                "z_max": 12.94
+            },
+            "original_coordinates": {
+                "x": 15.0,
+                "y": 4.6,
+                "z": 12.0
+            },
+            "post_collapse_coordinates": {
+                "x": 15.76,
+                "y": 4.73,
+                "z": 11.54
+            },
+            "structural_damage_pct": 97,
+            "heavy_furniture": {
+                "type": "Dining Table",
+                "creates_void": true
+            }
+        },
+        {
+            "room_id": "R-402",
+            "room_name": "4th Floor - South Apartment Kitchen",
+            "floor": 4,
+            "grid_cell": {
+                "column": 2,
+                "row": 2
+            },
+            "dimensions": {
+                "width": 8.0,
+                "depth": 7.2,
+                "height": 2.8
+            },
+            "bounds": {
+                "x_min": 11.0,
+                "x_max": 19.0,
+                "y_min": 11.8,
+                "y_max": 19.0,
+                "z_min": 10.6,
+                "z_max": 13.4
+            },
+            "post_collapse_bounds": {
+                "x_min": 11.0,
+                "x_max": 19.0,
+                "y_min": 11.8,
+                "y_max": 19.0,
+                "z_min": 10.29,
+                "z_max": 13.09
+            },
+            "original_coordinates": {
+                "x": 15.0,
+                "y": 15.4,
+                "z": 12.0
+            },
+            "post_collapse_coordinates": {
+                "x": 15.55,
+                "y": 15.34,
+                "z": 11.69
+            },
+            "structural_damage_pct": 97,
+            "heavy_furniture": {
+                "type": "Dining Table",
+                "creates_void": false
+            }
+        }
+    ]
+}

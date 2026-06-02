@@ -1,0 +1,10 @@
+{
+    "building_id": "B-BLDG-99",
+    "year_built": 1978,
+    "construction_standard": "Pre-Structural-Standard-413",
+    "primary_materials": [
+        "Reinforced Concrete Columns",
+        "Unreinforced Hollow Blocks"
+    ],
+    "structural_integrity_pre_event": 81.0
+}

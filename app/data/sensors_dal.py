@@ -1,26 +1,41 @@
 import json
-import os
+from pathlib import Path
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+REQUIRED_JSON_FILES = {
+    "missile_impact": "missile_impact.json",
+    "building_history": "building_history.json",
+    "resident_registry": "resident_registry.json",
+    "bim": "building_bim.json",
+    "meters": "smart_meters_historical.json",
+    "cellular": "cellular_telemetry.json",
+    "wifi": "wifi_routers.json",
+    "ble": "ble_active_signals.json",
+    "contacts": "emergency_contacts.json",
+}
+
 
 def load_json_data(file_name):
-    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-    file_path = os.path.join(base_dir, file_name)
+    file_path = PROJECT_ROOT / file_name
+    if not file_path.exists():
+        raise FileNotFoundError(f"Missing data file: {file_path}")
 
-    if not os.path.exists(file_path):
-        print(f"Error: Could not find {file_path}")
-        return None
+    with file_path.open("r", encoding="utf-8") as file:
+        return json.load(file)
 
-    with open(file_path, 'r', encoding='utf-8') as f:
-        return json.load(f)
+
+def get_missing_data_files():
+    return [
+        file_name
+        for file_name in REQUIRED_JSON_FILES.values()
+        if not (PROJECT_ROOT / file_name).exists()
+    ]
+
 
 def get_all_sensors_data():
     return {
-        "missile_impact": load_json_data('missile_impact.json'),
-        "building_history": load_json_data('building_history.json'),
-        "resident_registry": load_json_data('resident_registry.json'),
-        "bim": load_json_data('building_bim.json'),
-        "meters": load_json_data('smart_meters_historical.json'),
-        "cellular": load_json_data('cellular_telemetry.json'),
-        "wifi": load_json_data('wifi_routers.json'),
-        "ble": load_json_data('ble_active_signals.json'),
-        "contacts": load_json_data('emergency_contacts.json')
+        data_key: load_json_data(file_name)
+        for data_key, file_name in REQUIRED_JSON_FILES.items()
     }
