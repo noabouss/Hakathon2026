@@ -1,334 +1,663 @@
 import json
-import os
+import math
 import random
 
 
-def generate_all_separate_entities():
-    print("Generating comprehensive, multi-building baseline configurations for USAR Engine...")
+RANDOM_SEED = None
+DISPLACED_OCCUPANT_PROBABILITY = 0.30
+DEVICE_HUMAN_SEPARATION_PROBABILITY = 0.15
+SENSOR_CONTRADICTION_PROBABILITY = 0.10
+HIGH_DAMAGE_BLACKOUT_PROBABILITY = 0.25
+FLOOR_HEIGHT_METERS = 3.2
+ROOM_HEIGHT_METERS = 2.8
+BUILDING_FOOTPRINT = {
+    "x_min": 0.0,
+    "x_max": 36.0,
+    "y_min": 0.0,
+    "y_max": 24.0,
+    "z_min": 0.0,
+    "z_max": 18.0,
+}
 
-    target_folder = "mock_data"
-    if not os.path.exists(target_folder):
-        os.makedirs(target_folder)
-        print(f"Created directory: '{target_folder}'")
 
-    # ==========================================
-    # 1. BUILDING HISTORY
-    # ==========================================
-    building_history = [
-        {"building_id": "B-BLDG-99", "building_name": "Old Residential Block", "year_built": 1978,
-         "construction_standard": "Pre-Structural-Standard-413",
-         "primary_materials": ["Reinforced Concrete Columns", "Unreinforced Hollow Blocks"],
-         "structural_integrity_pre_event": 85.0},
-        {"building_id": "B-BLDG-105", "building_name": "Modern Residential Tower", "year_built": 2015,
-         "construction_standard": "Tamam-38-Compliant",
-         "primary_materials": ["High-Strength Concrete", "Steel Shear Walls", "Safe Rooms (MAMAD)"],
-         "structural_integrity_pre_event": 98.5},
-        {"building_id": "B-BLDG-202", "building_name": "Regional Elementary School", "year_built": 1995,
-         "construction_standard": "Standard-413-Public",
-         "primary_materials": ["Precast Concrete Panels", "Steel Trusses"], "structural_integrity_pre_event": 90.0}
+ROOM_GRID_TEMPLATE = {
+    "R-101": {
+        "name": "Machon Tal Beit HaDfus 7 - Ground Floor Lobby",
+        "floor": 1,
+        "grid_cell": {"column": 1, "row": 1},
+        "bounds": {"x_min": 1.2, "x_max": 12.0, "y_min": 1.0, "y_max": 9.5},
+    },
+    "R-102": {
+        "name": "Machon Tal Beit HaDfus 7 - Security and Entrance Wing",
+        "floor": 1,
+        "grid_cell": {"column": 2, "row": 1},
+        "bounds": {"x_min": 13.5, "x_max": 25.0, "y_min": 1.0, "y_max": 9.5},
+    },
+    "R-201": {
+        "name": "Machon Tal Beit HaDfus 7 - Computer Lab 201",
+        "floor": 2,
+        "grid_cell": {"column": 1, "row": 1},
+        "bounds": {"x_min": 1.2, "x_max": 12.0, "y_min": 1.0, "y_max": 9.5},
+    },
+    "R-202": {
+        "name": "Machon Tal Beit HaDfus 7 - Lecture Hall 202",
+        "floor": 2,
+        "grid_cell": {"column": 1, "row": 2},
+        "bounds": {"x_min": 1.2, "x_max": 17.0, "y_min": 12.0, "y_max": 23.0},
+    },
+    "R-301": {
+        "name": "Machon Tal Beit HaDfus 7 - Faculty Office Wing",
+        "floor": 3,
+        "grid_cell": {"column": 2, "row": 1},
+        "bounds": {"x_min": 13.5, "x_max": 25.0, "y_min": 1.0, "y_max": 9.5},
+    },
+    "R-302": {
+        "name": "Machon Tal Beit HaDfus 7 - Seminar Room 302",
+        "floor": 3,
+        "grid_cell": {"column": 2, "row": 2},
+        "bounds": {"x_min": 18.8, "x_max": 34.8, "y_min": 12.0, "y_max": 23.0},
+    },
+    "R-401": {
+        "name": "Machon Tal Beit HaDfus 7 - Library Reading Area",
+        "floor": 4,
+        "grid_cell": {"column": 2, "row": 1},
+        "bounds": {"x_min": 13.5, "x_max": 34.8, "y_min": 1.0, "y_max": 9.5},
+    },
+    "R-402": {
+        "name": "Machon Tal Beit HaDfus 7 - Student Services Wing",
+        "floor": 4,
+        "grid_cell": {"column": 2, "row": 2},
+        "bounds": {"x_min": 18.8, "x_max": 34.8, "y_min": 12.0, "y_max": 23.0},
+    },
+}
+
+
+def clamp(value, low, high):
+    return max(low, min(high, value))
+
+
+def distance_3d(a, b):
+    return math.sqrt(
+        (a[0] - b[0]) ** 2
+        + (a[1] - b[1]) ** 2
+        + (a[2] - b[2]) ** 2
+    )
+
+
+def sigmoid(value):
+    return 1.0 / (1.0 + math.exp(-value))
+
+
+def room_type_from_name(room_name):
+    lower_name = room_name.lower()
+    if "bedroom" in lower_name:
+        return "bedroom"
+    if "kitchen" in lower_name:
+        return "kitchen"
+    if "living" in lower_name or "main" in lower_name:
+        return "living"
+    return "general"
+
+
+def floor_from_room_id(room_id):
+    return int(room_id.split("-")[1][0])
+
+
+def room_center_from_bounds(bounds, floor):
+    return [
+        round((bounds["x_min"] + bounds["x_max"]) / 2.0, 2),
+        round((bounds["y_min"] + bounds["y_max"]) / 2.0, 2),
+        round(floor * FLOOR_HEIGHT_METERS, 2),
     ]
 
-    # ==========================================
-    # 2. RESIDENT REGISTRY (כולל פרטי התקשרות ישירים בלבד)
-    # ==========================================
-    resident_registry = [
-        # Building 99
-        {"occupant_id": "OCC-R-101-A", "name": "Yossi Levi", "age": 42, "associated_building": "B-BLDG-99",
-         "home_room_id": "R-99-101", "mobility_index": 1.0, "phone_number": "+972-50-1234567",
-         "phone_call_status": {"called": True, "answered": True, "call_duration_seconds": 45,
-                               "device_status": "Active"}},
-        {"occupant_id": "OCC-R-102-A", "name": "Grandpa Abraham", "age": 81, "associated_building": "B-BLDG-99",
-         "home_room_id": "R-99-102", "mobility_index": 0.2, "phone_number": "+972-52-9876543",
-         "phone_call_status": {"called": True, "answered": False, "reason": "No Answer / Ringing",
-                               "device_status": "Active"}},
-        {"occupant_id": "OCC-R-201-A", "name": "Noam Cohen", "age": 28, "associated_building": "B-BLDG-99",
-         "home_room_id": "R-99-201", "mobility_index": 1.0, "phone_number": "+972-54-1112233",
-         "phone_call_status": {"called": True, "answered": True, "call_duration_seconds": 12,
-                               "device_status": "Active"}},
-        {"occupant_id": "OCC-R-202-A", "name": "Michal Cohen", "age": 26, "associated_building": "B-BLDG-99",
-         "home_room_id": "R-99-202", "mobility_index": 1.0, "phone_number": "+972-54-4445566",
-         "phone_call_status": {"called": True, "answered": False, "reason": "Line Disconnected Abruptly",
-                               "device_status": "Disconnected"}},
-        {"occupant_id": "OCC-R-301-A", "name": "Baby Emily", "age": 1, "associated_building": "B-BLDG-99",
-         "home_room_id": "R-99-301", "mobility_index": 0.0, "phone_number": "None",
-         "phone_call_status": {"called": False, "answered": False, "reason": "No Device Registered",
-                               "device_status": "None"}},
-        {"occupant_id": "OCC-R-302-A", "name": "David Levi", "age": 12, "associated_building": "B-BLDG-99",
-         "home_room_id": "R-99-302", "mobility_index": 1.0, "phone_number": "+972-53-7778899",
-         "phone_call_status": {"called": True, "answered": True, "call_duration_seconds": 120,
-                               "device_status": "Active"}},
-        {"occupant_id": "OCC-R-401-A", "name": "Tomer Green", "age": 35, "associated_building": "B-BLDG-99",
-         "home_room_id": "R-99-401", "mobility_index": 1.0, "phone_number": "+972-50-5556677",
-         "phone_call_status": {"called": True, "answered": True, "call_duration_seconds": 5,
-                               "device_status": "Active"}},
-        {"occupant_id": "OCC-R-402-A", "name": "Elena Rostova", "age": 67, "associated_building": "B-BLDG-99",
-         "home_room_id": "R-99-402", "mobility_index": 0.5, "phone_number": "+972-58-3334455",
-         "phone_call_status": {"called": True, "answered": False, "reason": "Destination Unreachable / Dead Zone",
-                               "device_status": "Unreachable"}},
 
-        # Building 105
-        {"occupant_id": "OCC-105-A", "name": "Dana Regev", "age": 31, "associated_building": "B-BLDG-105",
-         "home_room_id": "R-105-101", "mobility_index": 1.0, "phone_number": "+972-52-6667788",
-         "phone_call_status": {"called": True, "answered": True, "call_duration_seconds": 95,
-                               "device_status": "Active"}},
-        {"occupant_id": "OCC-105-B", "name": "Eitan Regev", "age": 7, "associated_building": "B-BLDG-105",
-         "home_room_id": "R-105-102-MAMAD", "mobility_index": 1.0, "phone_number": "+972-55-1239874",
-         "phone_call_status": {"called": True, "answered": False, "reason": "Busy", "device_status": "Active"}},
-        {"occupant_id": "OCC-105-C", "name": "Miriam Goldstein", "age": 75, "associated_building": "B-BLDG-105",
-         "home_room_id": "R-105-202-MAMAD", "mobility_index": 0.4, "phone_number": "+972-50-9990011",
-         "phone_call_status": {"called": True, "answered": False, "reason": "Device Powered Off",
-                               "device_status": "Off"}},
-
-        # Building 202
-        {"occupant_id": "OCC-202-TEACHER", "name": "Sarah Miller (Teacher)", "age": 45,
-         "associated_building": "B-BLDG-202", "home_room_id": "R-202-F2", "mobility_index": 1.0,
-         "phone_number": "+972-54-7771122",
-         "phone_call_status": {"called": True, "answered": True, "call_duration_seconds": 60,
-                               "device_status": "Active"}},
-        {"occupant_id": "OCC-202-STUDENT1", "name": "Danielle", "age": 10, "associated_building": "B-BLDG-202",
-         "home_room_id": "R-202-G1", "mobility_index": 1.0, "phone_number": "+972-50-8883344",
-         "phone_call_status": {"called": True, "answered": False, "reason": "No Answer", "device_status": "Active"}},
-        {"occupant_id": "OCC-202-STUDENT2", "name": "Roy", "age": 9, "associated_building": "B-BLDG-202",
-         "home_room_id": "R-202-AUD", "mobility_index": 1.0, "phone_number": "+972-52-4449911",
-         "phone_call_status": {"called": True, "answered": False, "reason": "Device Powered Off",
-                               "device_status": "Off"}}
-    ]
-
-    # ==========================================
-    # ROOMS SETUP (BIM Logic)
-    # ==========================================
-    rooms_setup = {
-        "R-99-101": {"b_id": "B-BLDG-99", "name": "1st Floor - Living Room", "orig": [5.0, 5.0, 3.0], "safe": False},
-        "R-99-102": {"b_id": "B-BLDG-99", "name": "1st Floor - Bedroom", "orig": [5.0, 12.0, 3.0], "safe": False},
-        "R-99-201": {"b_id": "B-BLDG-99", "name": "2nd Floor - Living Room", "orig": [5.0, 5.0, 6.0], "safe": False},
-        "R-99-202": {"b_id": "B-BLDG-99", "name": "2nd Floor - Bedroom", "orig": [5.0, 12.0, 6.0], "safe": False},
-        "R-99-301": {"b_id": "B-BLDG-99", "name": "3rd Floor - Living Room", "orig": [12.0, 5.0, 9.0], "safe": False},
-        "R-99-302": {"b_id": "B-BLDG-99", "name": "3rd Floor - Bedroom", "orig": [12.0, 12.0, 9.0], "safe": False},
-        "R-99-401": {"b_id": "B-BLDG-99", "name": "4th Floor - Main Room", "orig": [12.0, 5.0, 12.0], "safe": False},
-        "R-99-402": {"b_id": "B-BLDG-99", "name": "4th Floor - Kitchen", "orig": [12.0, 12.0, 12.0], "safe": False},
-
-        "R-105-101": {"b_id": "B-BLDG-105", "name": "Apt 1 - Salon", "orig": [4.0, 4.0, 3.0], "safe": False},
-        "R-105-102-MAMAD": {"b_id": "B-BLDG-105", "name": "Apt 1 - Safe Room", "orig": [4.0, 10.0, 3.0], "safe": True},
-        "R-105-201": {"b_id": "B-BLDG-105", "name": "Apt 2 - Salon", "orig": [4.0, 4.0, 6.0], "safe": False},
-        "R-105-202-MAMAD": {"b_id": "B-BLDG-105", "name": "Apt 2 - Safe Room", "orig": [4.0, 10.0, 6.0], "safe": True},
-
-        "R-202-G1": {"b_id": "B-BLDG-202", "name": "Ground Floor - Class 1A", "orig": [10.0, 8.0, 4.0], "safe": False},
-        "R-202-AUD": {"b_id": "B-BLDG-202", "name": "Auditorium / Sport Hall", "orig": [18.0, 25.0, 5.0],
-                      "safe": False},
-        "R-202-F2": {"b_id": "B-BLDG-202", "name": "1st Floor - Teachers Lounge", "orig": [25.0, 8.0, 8.0],
-                     "safe": False}
+def room_dimensions_from_bounds(bounds):
+    return {
+        "width": round(bounds["x_max"] - bounds["x_min"], 2),
+        "depth": round(bounds["y_max"] - bounds["y_min"], 2),
+        "height": ROOM_HEIGHT_METERS,
     }
 
-    # ✨ שינוי 1: מאגר סוגי איומים ורקטות עם מכפיל נזק פיזיקלי משלהם
-    missile_presets = [
-        {
-            "missile_type": "Heavy Artillery Rocket",
-            "payload_weight_kg": 150,
-            "impact_velocity_mps": 450,
-            "impact_angle_azimuth_deg": 210,
-            "impact_angle_elevation_deg": 45,
-            "operational_zone_max_radius_meters": 50.0,
-            "damage_multiplier": 1.2
-        },
-        {
-            "missile_type": "Precision Suicide Drone",
-            "payload_weight_kg": 25,
-            "impact_velocity_mps": 180,
-            "impact_angle_azimuth_deg": 135,
-            "impact_angle_elevation_deg": 15,
-            "operational_zone_max_radius_meters": 15.0,
-            "damage_multiplier": 0.5
-        },
-        {
-            "missile_type": "Standard Mortar Shell",
-            "payload_weight_kg": 45,
-            "impact_velocity_mps": 300,
-            "impact_angle_azimuth_deg": 90,
-            "impact_angle_elevation_deg": 70,
-            "operational_zone_max_radius_meters": 25.0,
-            "damage_multiplier": 0.8
+
+def room_bounds_3d(bounds, floor, z_center=None):
+    z = floor * FLOOR_HEIGHT_METERS if z_center is None else z_center
+    return {
+        "x_min": bounds["x_min"],
+        "x_max": bounds["x_max"],
+        "y_min": bounds["y_min"],
+        "y_max": bounds["y_max"],
+        "z_min": round(max(0.0, z - ROOM_HEIGHT_METERS / 2.0), 2),
+        "z_max": round(max(0.0, z - ROOM_HEIGHT_METERS / 2.0) + ROOM_HEIGHT_METERS, 2),
+    }
+
+
+def room_setup_from_grid_template():
+    return {
+        room_id: {
+            "name": template["name"],
+            "floor": template["floor"],
+            "grid_cell": template["grid_cell"],
+            "bounds": template["bounds"],
+            "orig": room_center_from_bounds(template["bounds"], template["floor"]),
+            "dimensions": room_dimensions_from_bounds(template["bounds"]),
         }
-    ]
-
-    # ✨ שינוי 2: הגרלת סוג רקטה אקראי ונקודת פגיעה (Epicenter) דינמית בכל הרצה
-    chosen_missile = random.choice(missile_presets)
-    epi_x = round(random.uniform(2.0, 25.0), 1)
-    epi_y = round(random.uniform(2.0, 25.0), 1)
-    epi_z = round(random.uniform(3.0, 15.0), 1)
-
-    # בניית אובייקט הפגיעה הסופי שיוצג ויישמר
-    missile_impact = {
-        "missile_type": chosen_missile["missile_type"],
-        "payload_weight_kg": chosen_missile["payload_weight_kg"],
-        "impact_velocity_mps": chosen_missile["impact_velocity_mps"],
-        "impact_angle_azimuth_deg": chosen_missile["impact_angle_azimuth_deg"],
-        "impact_angle_elevation_deg": chosen_missile["impact_angle_elevation_deg"],
-        "epicenter_coordinates": {"x": epi_x, "y": epi_y, "z": epi_z},
-        "operational_zone_max_radius_meters": chosen_missile["operational_zone_max_radius_meters"]
+        for room_id, template in ROOM_GRID_TEMPLATE.items()
     }
 
-    # ==========================================
-    # 3. BUILDING BIM
-    # ==========================================
-    building_bim = {"buildings": []}
-    by_bldg = {}
-    for r_id, r_info in rooms_setup.items():
-        b_id = str(r_info["b_id"])
-        if b_id not in by_bldg:
-            by_bldg[b_id] = []
 
-        # ✨ שינוי 3: חישוב המרחק והנזק מבוסס כעת על האפיסנטר המוגרל ומכפיל הנזק של הרקטה שנבחרה
-        dist = ((r_info["orig"][0] - epi_x) ** 2 +
-                (r_info["orig"][1] - epi_y) ** 2 +
-                (r_info["orig"][2] - epi_z) ** 2) ** 0.5
+def material_fragility_factor(materials, construction_standard):
+    """
+    BRIGHT-style damage generation: damage probability is driven by exposure,
+    vulnerability, and observed material classes. Masonry infill and pre-code
+    buildings receive higher fragility than post-standard reinforced frames.
+    """
+    text = " ".join(materials + [construction_standard]).lower()
+    fragility = 1.0
+    if "unreinforced" in text or "hollow blocks" in text:
+        fragility += 0.28
+    if "pre-structural" in text:
+        fragility += 0.22
+    if "reinforced concrete" in text:
+        fragility -= 0.08
+    return clamp(fragility, 0.75, 1.55)
 
-        # חישוב אחוז הנזק מושפע ישירות מה-damage_multiplier של האיום הספציפי
-        base_damage = (1 / (dist + 1)) * 350
-        damage_pct = max(10, min(95, int(base_damage * chosen_missile["damage_multiplier"])))
 
-        if r_info["safe"]:
-            damage_pct = max(5, int(damage_pct * 0.2))
+def calculate_structural_damage_pct(room_origin, missile_impact, building_history):
+    """
+    Non-linear blast falloff inspired by building-damage datasets such as BRIGHT:
+    close rooms saturate toward heavy/destroyed classes, while far rooms decay
+    exponentially. Payload is cube-root scaled, matching blast similarity laws.
+    """
+    epicenter = missile_impact["epicenter_coordinates"]
+    epicenter_tuple = (epicenter["x"], epicenter["y"], epicenter["z"])
+    dist = distance_3d(room_origin, epicenter_tuple)
+    payload = missile_impact["payload_weight_kg"]
+    integrity = building_history["structural_integrity_pre_event"] / 100.0
+    fragility = material_fragility_factor(
+        building_history["primary_materials"],
+        building_history["construction_standard"],
+    )
 
-        z_drop = (damage_pct / 100.0) * (r_info["orig"][2] - 0.5)
+    scaled_distance = dist / max(payload ** (1.0 / 3.0), 1.0)
+    damage_probability = sigmoid((2.8 - scaled_distance) * 1.35)
+    vulnerability = (1.0 - integrity) * 0.42 + (fragility - 1.0) * 0.35
+    elevation_bonus = 0.08 if abs(room_origin[2] - epicenter_tuple[2]) <= 3.2 else 0.0
+    noise = random.gauss(0, 5.5)
 
-        by_bldg[b_id].append({
-            "room_id": r_id,
-            "room_name": r_info["name"],
-            "is_safe_room": r_info["safe"],
-            "original_coordinates": {"x": r_info["orig"][0], "y": r_info["orig"][1], "z": r_info["orig"][2]},
+    damage = 100.0 * clamp(damage_probability + vulnerability + elevation_bonus, 0.0, 1.0)
+    return int(clamp(round(damage + noise), 8, 97))
+
+
+def generate_room_energy_profile(room_name, occupied_probability):
+    """
+    ENERTALK and REFIT both contain high-resolution aggregate/appliance traces.
+    For this schema we emit eight 15-minute kWh bins, using a log-normal profile:
+    residential loads are positive, right-skewed, and appliance bursts create
+    short spikes rather than uniform random values.
+    """
+    room_type = room_type_from_name(room_name)
+    base_kw_by_room = {
+        "bedroom": 0.18,
+        "living": 0.42,
+        "kitchen": 0.68,
+        "general": 0.28,
+    }
+    base_kw = base_kw_by_room[room_type]
+    occupancy_multiplier = random.uniform(1.25, 2.6) if random.random() < occupied_probability else random.uniform(0.35, 0.9)
+    evening_activity = random.uniform(0.85, 1.35)
+
+    profile = []
+    appliance_spike_index = random.randrange(8) if room_type in {"kitchen", "living"} and random.random() < 0.45 else None
+    for idx in range(8):
+        kw = random.lognormvariate(math.log(base_kw * occupancy_multiplier * evening_activity), 0.32)
+        if idx == appliance_spike_index:
+            kw += random.uniform(0.45, 1.2)
+        kwh_15min = kw * 0.25
+        profile.append(round(clamp(kwh_15min, 0.03, 1.55), 2))
+    return profile
+
+
+def should_room_be_occupied(room_name):
+    room_type = room_type_from_name(room_name)
+    probabilities = {
+        "bedroom": 0.42,
+        "living": 0.68,
+        "kitchen": 0.58,
+        "general": 0.46,
+    }
+    return probabilities[room_type]
+
+
+def movement_state(steps):
+    if steps >= 70:
+        return "Running"
+    if steps >= 12:
+        return "Walking"
+    return "Resting"
+
+
+def generate_pedometer_steps(resident, room_damage_pct, contact_context):
+    """
+    Replaces hardcoded step presets. Steps are correlated with mobility, age,
+    shelter intent, and damage. High damage can abruptly stop motion, while
+    shelter intent increases pre-collapse movement.
+    """
+    age = resident["age"]
+    mobility = resident["mobility_index"]
+    age_factor = 0.55 if age < 5 else 0.75 if age > 75 else 1.0
+    shelter_boost = 1.7 if contact_context["going_to_shelter"] else 1.0
+    mean_steps = 28.0 * mobility * age_factor * shelter_boost
+    steps = random.gauss(mean_steps, 18.0)
+
+    if room_damage_pct >= 80:
+        steps *= random.uniform(0.05, 0.55)
+    elif room_damage_pct >= 55:
+        steps *= random.uniform(0.35, 0.95)
+
+    return int(clamp(round(steps), 0, 145))
+
+
+def generate_contact_context(resident, room_name):
+    room_type = room_type_from_name(room_name)
+    mobility = resident["mobility_index"]
+    known_at_home_probability = 0.72 if room_type == "bedroom" else 0.48
+    shelter_probability = clamp(0.18 + mobility * 0.38, 0.05, 0.74)
+    spoke_probability = clamp(0.22 + mobility * 0.25, 0.08, 0.58)
+
+    return {
+        "spoke_last_5_mins": random.random() < spoke_probability,
+        "known_at_home": random.random() < known_at_home_probability,
+        "going_to_shelter": random.random() < shelter_probability,
+    }
+
+
+def estimate_rssi_dbm(room_origin, room_damage_pct, home_floor):
+    """
+    SODIndoorLoc-style RSSI simulation: log-distance path loss plus attenuation
+    from floors, interior walls, and concrete debris. Higher damage therefore
+    weakens BLE/WiFi signals in the same direction as the structural model.
+    """
+    receiver = (0.0, 0.0, 1.5)
+    dist = max(distance_3d(room_origin, receiver), 1.0)
+    path_loss_exponent = random.uniform(2.0, 2.8)
+    wall_loss = random.uniform(3.0, 8.0)
+    floor_loss = max(0, home_floor - 1) * random.uniform(5.0, 9.0)
+    debris_loss = room_damage_pct * random.uniform(0.10, 0.22)
+    noise = random.gauss(0, 3.2)
+    tx_at_1m = -43.0
+    rssi = tx_at_1m - 10.0 * path_loss_exponent * math.log10(dist) - wall_loss - floor_loss - debris_loss + noise
+    return round(clamp(rssi, -96.0, -45.0), 1)
+
+
+def generate_vitals(resident, room_damage_pct, steps):
+    """
+    PerHeart-inspired wearable telemetry: heart rate baseline depends on age and
+    recent movement, then rises with stress/injury. Movement index drops sharply
+    when high damage suggests entrapment or injury.
+    """
+    age = resident["age"]
+    mobility = resident["mobility_index"]
+    pediatric_or_elderly = age < 10 or age > 70
+    resting_hr = 78 if pediatric_or_elderly else 68
+    activity_hr = min(42, steps * 0.22)
+    stress_hr = room_damage_pct * random.uniform(0.22, 0.55)
+    heart_rate = resting_hr + activity_hr + stress_hr + random.gauss(0, 7)
+
+    if room_damage_pct >= 82 and random.random() < 0.25:
+        heart_rate -= random.uniform(25, 45)
+
+    injury_factor = clamp(room_damage_pct / 100.0, 0.0, 1.0)
+    movement_index = mobility * (1.0 - injury_factor) * random.uniform(0.15, 0.95)
+    if room_damage_pct >= 75:
+        movement_index *= random.uniform(0.05, 0.35)
+
+    return {
+        "heart_rate_bpm": int(clamp(round(heart_rate), 38, 168)),
+        "movement_index": round(clamp(movement_index, 0.0, 1.0), 2),
+    }
+
+
+def generate_battery_pct(room_damage_pct):
+    base = random.gauss(72, 18)
+    damage_penalty = room_damage_pct * random.uniform(0.03, 0.12)
+    return int(clamp(round(base - damage_penalty), 8, 100))
+
+
+def owns_smartphone(resident):
+    """
+    Demographic ownership model: infants do not carry phones, elderly residents
+    have lower carry probability, and most adults/teens carry one.
+    """
+    age = resident["age"]
+    if age < 6:
+        return False
+    if age > 75:
+        return random.random() < 0.45
+    if age > 65:
+        return random.random() < 0.70
+    return random.random() < 0.92
+
+
+def owns_smartwatch(resident):
+    """
+    Wearable ownership is intentionally sparse. Roughly 35-40% of adults/teens
+    have BLE watch telemetry; toddlers and most elderly residents do not.
+    """
+    age = resident["age"]
+    if age < 12:
+        return False
+    if age > 75:
+        return random.random() < 0.18
+    return random.random() < 0.38
+
+
+def transitional_location_for_floor(floor):
+    """
+    Displaced occupants are placed in transitional spaces such as stairwells,
+    hallways, or shelter approaches. These latent locations are not written to
+    the existing JSON schema, but they drive sensor contradictions and vitals.
+    """
+    z = floor * FLOOR_HEIGHT_METERS
+    candidates = [
+        (8.5, 8.5, z),    # central stairwell
+        (9.5, 3.2, z),    # corridor toward exit
+        (15.2, 8.5, z),   # shelter-side hallway
+        (2.8, 8.5, z),    # outer corridor
+    ]
+    base = random.choice(candidates)
+    return (
+        round(clamp(base[0] + random.gauss(0, 0.8), BUILDING_FOOTPRINT["x_min"] + 0.5, BUILDING_FOOTPRINT["x_max"] - 0.5), 2),
+        round(clamp(base[1] + random.gauss(0, 0.8), BUILDING_FOOTPRINT["y_min"] + 0.5, BUILDING_FOOTPRINT["y_max"] - 0.5), 2),
+        round(clamp(base[2] + random.gauss(0, 0.35), BUILDING_FOOTPRINT["z_min"] + 0.5, BUILDING_FOOTPRINT["z_max"] - 0.5), 2),
+    )
+
+
+def home_room_location(room):
+    collapsed = room["post_collapse_coordinates"]
+    bounds = room.get("post_collapse_bounds") or room.get("bounds")
+    if bounds:
+        z_min = bounds.get("z_min", collapsed["z"] - ROOM_HEIGHT_METERS / 2.0)
+        z_max = bounds.get("z_max", collapsed["z"] + ROOM_HEIGHT_METERS / 2.0)
+        return (
+            round(clamp(random.gauss(collapsed["x"], room["dimensions"]["width"] * 0.18), bounds["x_min"] + 0.35, bounds["x_max"] - 0.35), 2),
+            round(clamp(random.gauss(collapsed["y"], room["dimensions"]["depth"] * 0.18), bounds["y_min"] + 0.35, bounds["y_max"] - 0.35), 2),
+            round(clamp(random.gauss(collapsed["z"], ROOM_HEIGHT_METERS * 0.14), z_min + 0.25, z_max - 0.25), 2),
+        )
+
+    return (
+        round(clamp(collapsed["x"] + random.gauss(0, 0.65), BUILDING_FOOTPRINT["x_min"] + 0.5, BUILDING_FOOTPRINT["x_max"] - 0.5), 2),
+        round(clamp(collapsed["y"] + random.gauss(0, 0.65), BUILDING_FOOTPRINT["y_min"] + 0.5, BUILDING_FOOTPRINT["y_max"] - 0.5), 2),
+        round(clamp(collapsed["z"] + random.gauss(0, 0.28), BUILDING_FOOTPRINT["z_min"] + 0.5, BUILDING_FOOTPRINT["z_max"] - 0.5), 2),
+    )
+
+
+def nearest_room_damage(location, rooms_by_id):
+    nearest_room = min(
+        rooms_by_id.values(),
+        key=lambda room: distance_3d(
+            location,
+            tuple(room["post_collapse_coordinates"].values()),
+        ),
+    )
+    return nearest_room["structural_damage_pct"]
+
+
+def should_blackout(room_damage_pct):
+    """
+    Catastrophic signal loss is only common in heavy-damage zones, where rebar
+    and concrete can block BLE/WiFi and sometimes destroy carried phones.
+    """
+    if room_damage_pct <= 75:
+        return False
+    probability = HIGH_DAMAGE_BLACKOUT_PROBABILITY + (room_damage_pct - 75) * 0.012
+    return random.random() < clamp(probability, 0.25, 0.60)
+
+
+def adjacent_floor_room_id(home_room_id):
+    floor = floor_from_room_id(home_room_id)
+    room_suffix = home_room_id[-2:]
+    target_floor = 2 if floor == 1 else floor - 1
+    return f"R-{target_floor}{room_suffix}"
+
+
+def generate_all_separate_entities():
+    if RANDOM_SEED is not None:
+        random.seed(RANDOM_SEED)
+
+    print("Generating 9 dynamic USAR data files from dataset-inspired statistical models...")
+
+    missile_impact = {
+        "missile_type": random.choice(["Heavy Artillery Rocket", "Medium Ballistic Rocket", "Short Range Missile"]),
+        "payload_weight_kg": int(round(random.triangular(80, 260, 150))),
+        "impact_velocity_mps": int(round(random.gauss(450, 85))),
+        "impact_angle_azimuth_deg": int(random.uniform(0, 360)),
+        "impact_angle_elevation_deg": int(clamp(random.gauss(45, 12), 25, 75)),
+        "epicenter_coordinates": {
+            "x": round(random.uniform(12.0, 28.0), 1),
+            "y": round(random.uniform(5.0, 18.0), 1),
+            "z": round(random.choice([floor * FLOOR_HEIGHT_METERS for floor in range(1, 5)]), 1),
+        },
+        "operational_zone_max_radius_meters": 50.0,
+    }
+
+    building_history = {
+        "building_id": "B-MACHON-TAL-BEIT-HADFUS-7",
+        "site_name": "Machon Tal Campus - Beit HaDfus 7, Jerusalem",
+        "year_built": 1980,
+        "construction_standard": "Reinforced Academic Campus Block",
+        "primary_materials": ["Reinforced Concrete Frame", "Concrete Block Interior Walls", "Glass Facade Panels"],
+        "structural_integrity_pre_event": round(clamp(random.gauss(86, 6), 68, 96), 1),
+    }
+
+    resident_registry = [
+        {"occupant_id": "OCC-R-101-A", "name": "Yossi Levi", "age": 42, "home_room_id": "R-101", "mobility_index": 1.0},
+        {"occupant_id": "OCC-R-102-A", "name": "Grandpa Abraham", "age": 81, "home_room_id": "R-102", "mobility_index": 0.2},
+        {"occupant_id": "OCC-R-201-A", "name": "Noam Cohen", "age": 28, "home_room_id": "R-201", "mobility_index": 1.0},
+        {"occupant_id": "OCC-R-202-A", "name": "Michal Cohen", "age": 26, "home_room_id": "R-202", "mobility_index": 1.0},
+        {"occupant_id": "OCC-R-301-A", "name": "Baby Emily", "age": 1, "home_room_id": "R-301", "mobility_index": 0.0},
+        {"occupant_id": "OCC-R-302-A", "name": "David Levi", "age": 12, "home_room_id": "R-302", "mobility_index": 1.0},
+        {"occupant_id": "OCC-R-401-A", "name": "Tomer Green", "age": 35, "home_room_id": "R-401", "mobility_index": 1.0},
+        {"occupant_id": "OCC-R-402-A", "name": "Elena Rostova", "age": 67, "home_room_id": "R-402", "mobility_index": 0.5},
+    ]
+
+    rooms_setup = room_setup_from_grid_template()
+
+    building_bim = {
+        "building_model": {
+            "model_type": "machon_tal_academic_block_v1",
+            "site_name": "Machon Tal Campus - Beit HaDfus 7, Jerusalem",
+            "floor_height_m": FLOOR_HEIGHT_METERS,
+            "room_height_m": ROOM_HEIGHT_METERS,
+            "footprint": BUILDING_FOOTPRINT,
+            "floor_levels_z": [round(floor * FLOOR_HEIGHT_METERS, 1) for floor in range(1, 5)],
+            "compatibility_note": "original_coordinates and post_collapse_coordinates remain the fusion-engine anchors.",
+        },
+        "rooms": [],
+    }
+    for room_id, room_info in rooms_setup.items():
+        original = tuple(room_info["orig"])
+        damage_pct = calculate_structural_damage_pct(original, missile_impact, building_history)
+        max_sag = ROOM_HEIGHT_METERS * 0.42
+        z_drop = (damage_pct / 100.0) * random.uniform(0.12, max_sag)
+        lateral_shift = (damage_pct / 100.0) * random.uniform(0.25, 0.95)
+        post_x = round(room_info["orig"][0] + lateral_shift, 2)
+        post_y = round(room_info["orig"][1] + random.gauss(0, 0.18) * damage_pct / 100.0, 2)
+        post_z = round(max(ROOM_HEIGHT_METERS / 2.0, room_info["orig"][2] - z_drop), 2)
+
+        room_name = room_info["name"]
+        heavy_type = "Heavy Bed" if "Bedroom" in room_name else "Dining Table"
+        creates_void = "Bedroom" in room_name or "Main" in room_name or (damage_pct < 45 and random.random() < 0.45)
+
+        building_bim["rooms"].append({
+            "room_id": room_id,
+            "room_name": room_name,
+            "floor": room_info["floor"],
+            "grid_cell": room_info["grid_cell"],
+            "dimensions": room_info["dimensions"],
+            "bounds": room_bounds_3d(room_info["bounds"], room_info["floor"]),
+            "post_collapse_bounds": room_bounds_3d(room_info["bounds"], room_info["floor"], z_center=post_z),
+            "original_coordinates": {"x": room_info["orig"][0], "y": room_info["orig"][1], "z": room_info["orig"][2]},
             "post_collapse_coordinates": {
-                "x": round(r_info["orig"][0] + (damage_pct / 60.0), 2),
-                "y": r_info["orig"][1],
-                "z": round(r_info["orig"][2] - z_drop, 2)
+                "x": post_x,
+                "y": post_y,
+                "z": post_z,
             },
             "structural_damage_pct": damage_pct,
             "heavy_furniture": {
-                "type": "Heavy Bed" if "Bedroom" in r_info["name"] or "MAMAD" in r_id else "Integrated Desk",
-                "creates_void": True if "Bedroom" in r_info["name"] or "MAMAD" in r_id or "Sport" in r_info[
-                    "name"] else False
-            }
+                "type": heavy_type,
+                "creates_void": creates_void,
+            },
         })
 
-    for b_id, rooms_list in by_bldg.items():
-        building_bim["buildings"].append({
-            "building_id": b_id,
-            "rooms": rooms_list
-        })
+    rooms_by_id = {room["room_id"]: room for room in building_bim["rooms"]}
 
-    # ==========================================
-    # 5. SMART METERS HISTORICAL (SYNCED)
-    # ==========================================
+    occupant_context = {}
+    for resident in resident_registry:
+        home_room = rooms_by_id[resident["home_room_id"]]
+        floor = floor_from_room_id(resident["home_room_id"])
+        has_phone = owns_smartphone(resident)
+        has_watch = owns_smartwatch(resident)
+        displaced = random.random() < DISPLACED_OCCUPANT_PROBABILITY
+        ghost_phone = has_phone and random.random() < DEVICE_HUMAN_SEPARATION_PROBABILITY
+
+        actual_location = (
+            transitional_location_for_floor(floor)
+            if displaced or ghost_phone
+            else home_room_location(home_room)
+        )
+        actual_damage = nearest_room_damage(actual_location, rooms_by_id)
+        home_damage = home_room["structural_damage_pct"]
+        blackout = should_blackout(max(actual_damage, home_damage))
+        contradiction = random.random() < SENSOR_CONTRADICTION_PROBABILITY
+
+        occupant_context[resident["occupant_id"]] = {
+            "has_phone": has_phone,
+            "has_watch": has_watch,
+            "displaced": displaced,
+            "ghost_phone": ghost_phone,
+            "actual_location": actual_location,
+            "actual_damage": actual_damage,
+            "blackout": blackout,
+            "contradiction": contradiction,
+        }
+
     smart_meters = []
-    for b_data in building_bim["buildings"]:
-        for room in b_data["rooms"]:
-            room_id = room['room_id']
-            people_in_room = len([r for r in resident_registry if r["home_room_id"] == room_id])
+    for room in building_bim["rooms"]:
+        occupied_probability = should_room_be_occupied(room["room_name"])
+        profile = generate_room_energy_profile(room["room_name"], occupied_probability)
+        damage_pct = room["structural_damage_pct"]
+        last_gasp_threshold = random.gauss(47, 5)
+        smart_meters.append({
+            "meter_id": f"METER-{room['room_id']}",
+            "room_id": room["room_id"],
+            "history_last_2h_kwh": profile,
+            "transmitted_last_gasp": True if damage_pct > last_gasp_threshold else False,
+        })
 
-            if people_in_room > 0:
-                base_load = round(random.uniform(0.6, 1.5), 2)
+    cellular_telemetry = []
+    emergency_contacts = []
+    contact_context_by_occupant = {}
+    for resident in resident_registry:
+        room = rooms_by_id[resident["home_room_id"]]
+        context = occupant_context[resident["occupant_id"]]
+        contact_context = generate_contact_context(resident, room["room_name"])
+        if context["displaced"]:
+            contact_context["known_at_home"] = False
+            contact_context["going_to_shelter"] = True
+        if context["ghost_phone"]:
+            contact_context["known_at_home"] = False
+            contact_context["going_to_shelter"] = True
+        contact_context_by_occupant[resident["occupant_id"]] = contact_context
+
+        if context["has_phone"] and not (context["blackout"] and random.random() < 0.45):
+            if context["ghost_phone"]:
+                # Phone left behind: perfect bedroom/home signal, but no movement.
+                steps = 0
             else:
-                base_load = round(random.uniform(0.02, 0.08), 2)
+                steps = generate_pedometer_steps(
+                    resident,
+                    max(room["structural_damage_pct"], context["actual_damage"]),
+                    contact_context,
+                )
 
-            smart_meters.append({
-                "meter_id": f"METER-{room_id}",
-                "building_id": b_data["building_id"],
-                "room_id": room_id,
-                "history_last_2h_kwh": [round(base_load * random.uniform(0.9, 1.1), 2) for _ in range(8)],
-                "transmitted_last_gasp": True if room["structural_damage_pct"] > 40 else False
+            cellular_telemetry.append({
+                "occupant_id": resident["occupant_id"],
+                "device_type": "smartphone",
+                "pedometer_5min_pre_event": {"steps": steps, "state": movement_state(steps)},
             })
 
-    # ==========================================
-    # 6. CELLULAR TELEMETRY (SYNCED)
-    # ==========================================
-    steps_presets = {
-        "OCC-R-101-A": (92, "Running"),
-        "OCC-R-102-A": (0, "Resting"),
-        "OCC-R-201-A": (45, "Walking"),
-        "OCC-R-202-A": (0, "Trapped"),
-        "OCC-R-301-A": (0, "Resting"),
-        "OCC-R-302-A": (110, "Running"),
-        "OCC-R-401-A": (14, "Walking"),
-        "OCC-R-402-A": (5, "Resting"),
-        "OCC-105-A": (80, "Running"),
-        "OCC-105-B": (120, "Running"),
-        "OCC-105-C": (0, "Resting"),
-        "OCC-202-TEACHER": (60, "Walking"),
-        "OCC-202-STUDENT1": (140, "Running"),
-        "OCC-202-STUDENT2": (5, "Resting")
-    }
-    cellular_telemetry = []
-    for res in resident_registry:
-        occ_id = res["occupant_id"]
-        cellular_telemetry.append({
-            "occupant_id": occ_id,
-            "device_type": "smartphone",
-            "pedometer_5min_pre_event": {"steps": steps_presets[occ_id][0], "state": steps_presets[occ_id][1]}
+        emergency_contacts.append({
+            "occupant_id": resident["occupant_id"],
+            "emergency_contact_response": contact_context,
         })
 
-    # ==========================================
-    # 7. WIFI ROUTERS
-    # ==========================================
-    wifi_routers = [
-        {"router_id": "WIFI-AP-99-FL1", "building_id": "B-BLDG-99",
-         "connected_occupants_pre_event": ["OCC-R-101-A", "OCC-R-102-A"]},
-        {"router_id": "WIFI-AP-99-FL2", "building_id": "B-BLDG-99",
-         "connected_occupants_pre_event": ["OCC-R-201-A", "OCC-R-202-A"]},
-        {"router_id": "WIFI-AP-99-FL3", "building_id": "B-BLDG-99",
-         "connected_occupants_pre_event": ["OCC-R-301-A", "OCC-R-302-A"]},
-        {"router_id": "WIFI-AP-99-FL4", "building_id": "B-BLDG-99",
-         "connected_occupants_pre_event": ["OCC-R-401-A", "OCC-R-402-A"]},
-        {"router_id": "WIFI-AP-105", "building_id": "B-BLDG-105",
-         "connected_occupants_pre_event": ["OCC-105-A", "OCC-105-B", "OCC-105-C"]},
-        {"router_id": "WIFI-AP-202", "building_id": "B-BLDG-202",
-         "connected_occupants_pre_event": ["OCC-202-TEACHER", "OCC-202-STUDENT1", "OCC-202-STUDENT2"]}
-    ]
+    wifi_routers = []
+    for floor in range(1, 5):
+        connected = []
+        for resident in resident_registry:
+            context = occupant_context[resident["occupant_id"]]
+            if not context["has_phone"] or context["blackout"]:
+                continue
 
-    # ==========================================
-    # 8. BLE ACTIVE SIGNALS (SYNCED)
-    # ==========================================
-    ble_presets = {
-        "OCC-R-101-A": {"rssi": -57.2, "hr": 91, "mov": 0.74, "bat": 83},
-        "OCC-R-102-A": {"rssi": -56.0, "hr": 55, "mov": 0.0, "bat": 78},
-        "OCC-R-201-A": {"rssi": -67.3, "hr": 100, "mov": 0.55, "bat": 45},
-        "OCC-R-202-A": {"rssi": -60.9, "hr": 135, "mov": 0.05, "bat": 50},
-        "OCC-R-301-A": {"rssi": -66.5, "hr": 114, "mov": 0.38, "bat": 70},
-        "OCC-R-302-A": {"rssi": -64.1, "hr": 117, "mov": 0.95, "bat": 58},
-        "OCC-R-401-A": {"rssi": -74.4, "hr": 130, "mov": 0.26, "bat": 46},
-        "OCC-R-402-A": {"rssi": -67.7, "hr": 124, "mov": 0.10, "bat": 82},
-        "OCC-105-A": {"rssi": -52.1, "hr": 110, "mov": 0.80, "bat": 90},
-        "OCC-105-B": {"rssi": -48.5, "hr": 125, "mov": 0.90, "bat": 95},
-        "OCC-105-C": {"rssi": -65.0, "hr": 88, "mov": 0.02, "bat": 34},
-        "OCC-202-TEACHER": {"rssi": -60.0, "hr": 99, "mov": 0.40, "bat": 76},
-        "OCC-202-STUDENT1": {"rssi": -55.2, "hr": 140, "mov": 0.98, "bat": 89},
-        "OCC-202-STUDENT2": {"rssi": -72.1, "hr": 105, "mov": 0.15, "bat": 62}
-    }
+            home_floor = floor_from_room_id(resident["home_room_id"])
+            if context["contradiction"]:
+                target_floor = 1 if home_floor != 1 else 2
+            else:
+                target_floor = home_floor
+
+            if target_floor != floor:
+                continue
+
+            room = rooms_by_id[resident["home_room_id"]]
+            rssi = estimate_rssi_dbm(
+                tuple(room["original_coordinates"].values()),
+                room["structural_damage_pct"],
+                floor,
+            )
+            connection_probability = clamp((rssi + 105.0) / 45.0, 0.08, 0.92)
+            if random.random() < connection_probability:
+                connected.append(resident["occupant_id"])
+
+        wifi_routers.append({
+            "router_id": f"WIFI-AP-FL{floor}",
+            "connected_occupants_pre_event": connected,
+        })
 
     ble_active_signals = []
-    for res in resident_registry:
-        occ_id = res["occupant_id"]
-        room_id = res["home_room_id"]
+    cellular_by_occupant = {
+        item["occupant_id"]: item["pedometer_5min_pre_event"]["steps"]
+        for item in cellular_telemetry
+    }
+    for resident in resident_registry:
+        context = occupant_context[resident["occupant_id"]]
+        if not context["has_watch"] or context["blackout"]:
+            continue
 
-        room_info = rooms_setup.get(room_id)
-        is_mamad = room_info.get("safe", False) if room_info else False
-
-        info = ble_presets[occ_id]
-        final_rssi = info["rssi"]
-
-        if is_mamad:
-            final_rssi = min(final_rssi, -85.0) - round(random.uniform(2.0, 8.0), 1)
+        room = rooms_by_id[resident["home_room_id"]]
+        home_floor = floor_from_room_id(resident["home_room_id"])
+        ble_room_id = adjacent_floor_room_id(resident["home_room_id"]) if context["contradiction"] else resident["home_room_id"]
+        ble_room_id = ble_room_id if ble_room_id in rooms_by_id else resident["home_room_id"]
+        ble_room = rooms_by_id[ble_room_id]
+        room_origin = tuple(room["original_coordinates"].values())
+        damage_pct = max(room["structural_damage_pct"], context["actual_damage"])
+        rssi = estimate_rssi_dbm(tuple(ble_room["original_coordinates"].values()), damage_pct, floor_from_room_id(ble_room_id))
+        if context["contradiction"]:
+            rssi = round(clamp(rssi + random.uniform(6, 14), -96, -45), 1)
+        vitals = generate_vitals(resident, damage_pct, cellular_by_occupant.get(resident["occupant_id"], 0))
 
         ble_active_signals.append({
-            "occupant_id": occ_id,
-            "associated_building": res["associated_building"],
-            "home_room_id": room_id,
+            "occupant_id": resident["occupant_id"],
+            "home_room_id": ble_room_id,
             "telemetry": {
-                "rssi_dbm": final_rssi,
-                "battery_pct": info["bat"],
-                "vital_signs": {"heart_rate_bpm": info["hr"], "movement_index": info["mov"]}
-            }
+                "rssi_dbm": rssi,
+                "battery_pct": generate_battery_pct(damage_pct),
+                "vital_signs": {
+                    "heart_rate_bpm": vitals["heart_rate_bpm"],
+                    "movement_index": vitals["movement_index"],
+                },
+            },
         })
 
-    # שמירת שמונת הקבצים המסונכרנים עם האיום המשתנה
     all_files = {
         "missile_impact.json": missile_impact,
         "building_history.json": building_history,
@@ -337,16 +666,15 @@ def generate_all_separate_entities():
         "smart_meters_historical.json": smart_meters,
         "cellular_telemetry.json": cellular_telemetry,
         "wifi_routers.json": wifi_routers,
-        "ble_active_signals.json": ble_active_signals
+        "ble_active_signals.json": ble_active_signals,
+        "emergency_contacts.json": emergency_contacts,
     }
 
     for filename, content in all_files.items():
-        file_path = os.path.join(target_folder, filename)
-        with open(file_path, 'w', encoding='utf-8') as f:
+        with open(filename, "w", encoding="utf-8") as f:
             json.dump(content, f, indent=4, ensure_ascii=False)
 
-    print(f"[SUCCESS] Scenario simulation complete using target: {chosen_missile['missile_type']}")
-    print(f"[SUCCESS] All 8 synchronized JSON files written into '{target_folder}/' successfully.")
+    print("[SUCCESS] All 9 dynamic JSON files written successfully.")
 
 
 if __name__ == "__main__":
