@@ -1,0 +1,26 @@
+[
+    {
+        "occupant_id": "OCC-R-101-A",
+        "device_type": "smartphone",
+        "pedometer_5min_pre_event": {
+            "steps": 0,
+            "state": "Resting"
+        }
+    },
+    {
+        "occupant_id": "OCC-R-302-A",
+        "device_type": "smartphone",
+        "pedometer_5min_pre_event": {
+            "steps": 5,
+            "state": "Resting"
+        }
+    },
+    {
+        "occupant_id": "OCC-R-401-A",
+        "device_type": "smartphone",
+        "pedometer_5min_pre_event": {
+            "steps": 15,
+            "state": "Walking"
+        }
+    }
+]
